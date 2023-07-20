@@ -110,3 +110,14 @@ function uploadImage($file, $destinationDirectory)
 
     return false; // File upload failed
 };
+
+// Function to generate a random combination of letters and numbers
+function generateRandomString($length = 6)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
+};

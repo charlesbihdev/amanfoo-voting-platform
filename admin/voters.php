@@ -180,7 +180,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                             Registered Voters
                         </div>
                         <div class="card-body">
-                            <table id="datatablesSimple">
+                            <table class="table-striped" id="datatablesSimple">
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
