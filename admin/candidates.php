@@ -302,10 +302,10 @@ if (isset($_POST['newCandidateSubmit'])) {
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>Photo</th>
+                                        <th>Candidate's Photo</th>
                                         <th>Candidate's Name</th>
                                         <th>Year Group</th>
-                                        <th>Class</th>
+                                        <th>Location</th>
                                         <th>Candidate's Phone</th>
                                         <th>Position</th>
                                         <th>Action</th>
@@ -336,10 +336,10 @@ if (isset($_POST['newCandidateSubmit'])) {
                                 <tfoot>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>Photo</th>
-                                        <th>Candidate Name</th>
+                                        <th>Candidate's Photo</th>
+                                        <th>Candidate's Name</th>
                                         <th>Year Group</th>
-                                        <th>Class</th>
+                                        <th>Location</th>
                                         <th>Candidate Phone</th>
                                         <th>Position</th>
                                         <th>Action</th>
