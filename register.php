@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Register - SB Admin</title>
-    <link href="css/styles.css" rel="stylesheet" />
+    <title>Voting - Registration</title>
+    <link href="./admin/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
@@ -21,24 +21,40 @@
                         <div class="col-lg-7">
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4 text-success">Create Account</h3>
+                                    <h3 class="text-center font-weight-light my-4 text-success">Register To Vote</h3>
                                 </div>
                                 <div class="card-body">
                                     <form>
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="fullname" type="text" placeholder="Enter your full name" />
-                                                    <label for="fullname">Fullname</label>
+                                                    <input class="form-control" id="fullname" type="text" name="fullname" placeholder="Enter your full name" />
+                                                    <label for="fullname">Fullname*</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input class="form-control" id="inputLastName" type="email" placeholder="Enter your email" />
-                                                    <label for="email">Email</label>
+                                                    <input class="form-control" id="email" type="email" placeholder="Enter your email" name="email" required />
+                                                    <label for="email">Email*</label>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="house" type="text" placeholder="Choose your House" required />
+                                                    <label for="house">House*</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input class="form-control" id="location" type="text" placeholder="Enter your inputLocation" name="location" required />
+                                                    <label for="location">Location *</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="photo" type="file" />
                                             <label for="photo">Upload your Photo</label>

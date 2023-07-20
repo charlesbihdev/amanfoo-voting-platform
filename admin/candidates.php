@@ -233,11 +233,11 @@ if (isset($_POST['newCandidateSubmit'])) {
                                     <form method="POST" action="" enctype="multipart/form-data">
                                         <div class="card-body">
                                             <div class="form-group mb-3">
-                                                <label for="candidateName">Candidate Name</label>
+                                                <label for="candidateName">Candidate's Name</label>
                                                 <input type="text" class="form-control" id="candidateName" name="candidateName" placeholder="Enter Candidate Name" required>
                                             </div>
                                             <div class="form-group mb-3">
-                                                <label for="candidateName">Candidate Photo</label>
+                                                <label for="candidateName">Candidate's Photo</label>
                                                 <input type="file" class="form-control" id="photo" name="photo" placeholder="Upload Photo of candidate" required>
 
                                             </div>
@@ -254,23 +254,23 @@ if (isset($_POST['newCandidateSubmit'])) {
                                                 </select>
                                             </div>
                                             <div class="form-group mb-3">
-                                                <label for="candidateClass">Candidate Class</label>
-                                                <input type="text" class="form-control" id="candidateClass" name="candidateClass" placeholder="Enter Candidate Class" required>
+                                                <label for="candidateClass">Candidate's Location</label>
+                                                <input type="text" class="form-control" id="candidateClass" name="candidateClass" placeholder="Enter Candidate's Location" required>
                                             </div>
 
                                             <div class="form-group mb-3">
-                                                <label for="candidatephone">Candidate House</label>
-                                                <input type="text" class="form-control" id="candidateHouse" name="candidateHouse" placeholder="Enter Candidate House" required>
+                                                <label for="candidatephone">Candidate's House</label>
+                                                <input type="text" class="form-control" id="candidateHouse" name="candidateHouse" placeholder="Enter Candidate's House" required>
                                             </div>
 
                                             <div class="form-group mb-3">
-                                                <label for="candidatephone">Candidate Year Group</label>
-                                                <input type="tel" class="form-control" id="candidateYear" name="candidateYear" placeholder="Enter Candidate Phone Year" required>
+                                                <label for="candidatephone">Candidate's Year Group</label>
+                                                <input type="tel" class="form-control" id="candidateYear" name="candidateYear" placeholder="Enter Candidate's Year" required>
                                             </div>
 
                                             <div class="form-group mb-3">
-                                                <label for="candidatephone">Candidate Phone</label>
-                                                <input type="tel" class="form-control" id="candidatephone" name="candidatePhone" placeholder="Enter Candidate Phone Number" required>
+                                                <label for="candidatephone">Candidate's Phone</label>
+                                                <input type="tel" class="form-control" id="candidatephone" name="candidatePhone" placeholder="Enter Candidate's Phone Number" required>
                                             </div>
 
 
@@ -303,10 +303,10 @@ if (isset($_POST['newCandidateSubmit'])) {
                                     <tr>
                                         <th>S/N</th>
                                         <th>Photo</th>
-                                        <th>Candidate Name</th>
+                                        <th>Candidate's Name</th>
                                         <th>Year Group</th>
                                         <th>Class</th>
-                                        <th>Candidate Phone</th>
+                                        <th>Candidate's Phone</th>
                                         <th>Position</th>
                                         <th>Action</th>
                                     </tr>
