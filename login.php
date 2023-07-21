@@ -1,3 +1,45 @@
+<?php
+require_once "./admin/database/config.php";
+require_once "./admin/auxilliaries.php";
+
+$alert = "";
+
+
+if (isset($_POST['submit'])) {
+    // Step 3: Get form data
+    $voterid = $_POST['voterid'];
+    $email = $_POST['email'];
+
+
+
+    if (!empty($email) && !empty($voterid)) {
+        // retrive data of user from db based on email
+        $userToBeLogged = new Admin($pdo, 'users');
+        $results = $userToBeLogged->read("email", $email);
+        //CHECK IF THE NUMBER OF ROW RETURNED IS > 0
+        if (!empty($results)) {
+            $retrievedEmail = $results[0]["email"];
+            $retrievedVoterId = $results[0]["voter_id"];
+
+            //CHECK IF USER EMAIL IS EQUAL TO RETRIEVED EMAIL AND USER PASSWORD IS EQUAL TO RETRIEVED PASSWORD
+            if ($email == $retrievedEmail && $voterid == $retrievedVoterId) {
+                //REDIRECT USER TO BLOG PAGE
+                header("location: ./vote.php");
+                exit();
+            } else {
+                //SHOW ERROR TO USER
+                $alert = "showAlert('error', 'wrong email or voter ID')";
+            }
+        } else {
+            //SHOW ERROR TO USER
+            $alert = "showAlert('error', 'Account Not found')";
+        }
+    } else {
+        // Display error message or redirect back to the form page with an error message
+        $alert = "showAlert('error', 'Error: Please fill all required fields and upload a valid photo.')";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +52,16 @@
     <title>Login - Amanfoo Voting Platform</title>
     <link href="./admin/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./admin/inc/sweetalert.js"> </script>
 </head>
 
 <body class="bg-success">
+    <?php
+    echo "<script>";
+    echo $alert;
+    echo "</script>";
+    ?>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -24,14 +73,14 @@
                                     <h3 class="text-center font-weight-light my-4 text-success">Login To Vote</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form method="POST" action="">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                            <label for="inputEmail">Email address</label>
+                                            <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" required />
+                                            <label for="email">Email address</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
-                                            <label for="inputPassword">Voter Id</label>
+                                            <input class="form-control" id="voterid" name="voterid" type="name" placeholder="Enter your Voter Id" required />
+                                            <label for="voterid">Voter Id</label>
                                         </div>
                                         <!-- <div class="form-check mb-3">
                                             <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
@@ -39,7 +88,7 @@
                                         </div> -->
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="password.php">Forgot Voter Id?</a>
-                                            <a class="btn btn-warning" href="index.php">Login</a>
+                                            <input type="submit" class="btn btn-warning" name="submit" value="Login"></input>
                                         </div>
                                     </form>
                                 </div>

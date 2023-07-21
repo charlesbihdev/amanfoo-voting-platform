@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
     if (!empty($fullname) && !empty($email) && !empty($house) && !empty($location) && !empty($selectedElectionId) && $uploadedImage) {
         // Step 5: Insert the data into the Candidates table, including the file name
-        $newCandidate = new Admin($pdo, 'users');
+        $newUser = new Admin($pdo, 'users');
         $data = [
             'name' => $fullname,
             'photo' => $uploadedImage,
@@ -43,10 +43,14 @@ if (isset($_POST['submit'])) {
             'candidate_voted_for_id' => $candidateVotedForId,
             'election_id' => $selectedElectionId
         ];
-        $newCandidate->create($data);
+        $newUser->create($data);
+        // $newUserRead->read("email", $email);
+        // $user
+        // print_r($newUserRead);
 
         // Display success message or redirect to a success page
         $alert = "showAlert('success', 'Candidate created successfully!')";
+        header("Location: ./viewvoterid.php?voterid={$voterId}");
     } else {
         // Display error message or redirect back to the form page with an error message
         $alert = "showAlert('error', 'Error: Please fill all required fields and upload a valid photo.')";

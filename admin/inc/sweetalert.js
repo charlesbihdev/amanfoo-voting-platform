@@ -7,7 +7,7 @@ window.showAlert = async (icon, title) => {
       popup: "colored-toast",
     },
     showConfirmButton: false,
-    timer: 2500,
+    timer: 3000,
     timerProgressBar: true,
   });
   await Toast.fire({
