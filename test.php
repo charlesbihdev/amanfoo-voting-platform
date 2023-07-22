@@ -1,280 +1,520 @@
 <?php
+session_start();
+
 require_once "./admin/database/config.php";
 require_once "./admin/auxilliaries.php";
 
-if (isset($_SESSION['user_id'])) {
-    // User is logged in
-    // You can access the user ID and other information from session variables like this:
-    $user_id = $_SESSION['user_id'];
-    $election_id = $_SESSION['election_id'];
-    // ... (other user-specific operations)
-} else {
-    // User is not logged in, you can redirect them to the login page
-    header("Location: login.php");
-    exit();
-}
+$electionId = 2;
+$electionType = new Admin($pdo, 'elections');
+
+//GET DASHBOARD TITLE
+$dasboardTitle = $electionType->read("election_id", $electionId);
+$title = $dasboardTitle[0]['election_name'];
+
+// Retrieve the number of positions for the specific election
+$sqlPositions = "SELECT COUNT(*) AS position_count FROM positions WHERE election_id = :election_id";
+$stmtPositions = $pdo->prepare($sqlPositions);
+$stmtPositions->bindParam(':election_id', $electionId, PDO::PARAM_INT);
+$stmtPositions->execute();
+$positionCount = $stmtPositions->fetch(PDO::FETCH_ASSOC)['position_count'];
+
+// Retrieve the number of candidates for the specific election
+$sqlCandidates = "SELECT COUNT(DISTINCT candidate_id) AS candidate_count FROM Candidates WHERE election_id = :election_id";
+$stmtCandidates = $pdo->prepare($sqlCandidates);
+$stmtCandidates->bindParam(':election_id', $electionId, PDO::PARAM_INT);
+$stmtCandidates->execute();
+$candidateCount = $stmtCandidates->fetch(PDO::FETCH_ASSOC)['candidate_count'];
 
 
-// Step 1: Fetch candidates based on their positions and the election_id
-$sql = "SELECT * FROM candidates WHERE election_id = :election_id ORDER BY position_id";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':election_id', $election_id, PDO::PARAM_INT);
-$stmt->execute();
-$candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Retrieve the total number of voters for the specific election
+$sqlTotalVoters = "SELECT COUNT(*) AS total_voters FROM users WHERE election_id = :election_id";
+$stmtTotalVoters = $pdo->prepare($sqlTotalVoters);
+$stmtTotalVoters->bindParam(':election_id', $electionId, PDO::PARAM_INT);
+$stmtTotalVoters->execute();
+$totalVoters = $stmtTotalVoters->fetch(PDO::FETCH_ASSOC)['total_voters'];
 
-// Step 2: Display the candidates grouped by their positions
-$positions = []; // Create an array to store candidates by position
-foreach ($candidates as $candidate) {
-    $position_id = $candidate['position_id'];
-    if (!isset($positions[$position_id])) {
-        $positions[$position_id] = []; // Initialize an array for each position
-    }
-    $positions[$position_id][] = $candidate; // Add the candidate to the corresponding position array
-}
+// Retrieve the number of voters who have voted for the specific election
+$sqlVotedVoters = "SELECT COUNT(DISTINCT user_id) AS voted_voters FROM Votes WHERE candidate_id IN (
+  SELECT candidate_id FROM Candidates WHERE election_id = :election_id
+)";
+$stmtVotedVoters = $pdo->prepare($sqlVotedVoters);
+$stmtVotedVoters->bindParam(':election_id', $electionId, PDO::PARAM_INT);
+$stmtVotedVoters->execute();
+$votedVoters = $stmtVotedVoters->fetch(PDO::FETCH_ASSOC)['voted_voters'];
 
-// Check if the form has been submitted
-if (isset($_POST["submit"])) {
-    $selectedCandidates = []; // Initialize an array to store the selected candidate IDs
+// Fetch election data from the database
+$sqlElections = "SELECT * FROM elections";
+$stmtElections = $pdo->prepare($sqlElections);
+$stmtElections->execute();
+$elections = $stmtElections->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($_POST as $key => $value) {
-        // Check if the key contains the position ID (e.g., 'position_2')
-        if (strpos($key, 'position_') === 0) {
-            // Extract the position ID from the key
-            $position_id = intval(substr($key, strlen('position_')));
+if (isset($_POST['submitCreateElection'])) {
+    $newElectionName = $_POST['electionName'];
+    $newElectionStartDate = $_POST['startdate'];
+    $newElectionEndDate = $_POST['enddate'];
+    $newElection = new Admin($pdo, 'elections');
+    if (!empty($newElectionName && $newElectionStartDate && $newElectionEndDate)) {
 
-            // Store the selected candidate ID for the corresponding position ID
-            $selectedCandidates[$position_id] = intval($value);
-        }
-    }
-
-    // Process the form data and update the vote count
-    foreach ($selectedCandidates as $position_id => $selectedCandidateId) {
-        // Update the vote count for the selected candidate
-        $sql = "UPDATE candidates SET votes_count = votes_count + 1 WHERE candidate_id = :candidate_id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':candidate_id', $selectedCandidateId, PDO::PARAM_INT);
-        $stmt->execute();
-
-        // Insert a new record into the votes table
-        $sql = "INSERT INTO votes (user_id, candidate_id) VALUES (:user_id, :candidate_id)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Replace $user_id with the actual user ID of the voter
-        $stmt->bindParam(':candidate_id', $selectedCandidateId, PDO::PARAM_INT);
-        $stmt->execute();
-
-        // You can also store the user's vote information in the database if needed
-        // For example, you can create a 'votes' table and insert a new vote record with the user_id and selected candidate_id
-        // This allows you to keep track of each user's vote history
-
-        // Redirect the user to a "Thank You" page or any other page after voting is successful
-        header("Location: thank_you.php");
-        exit();
+        $data = [
+            'election_name' => $newElectionName,
+            'start_date' => $newElectionStartDate,
+            'end_date' => $newElectionEndDate
+        ];
+        $newElection->create($data);
     }
 }
+
+
+$sqlPositions = "SELECT position_id, position_name FROM Positions WHERE election_id = :election_id";
+$stmtPositions = $pdo->prepare($sqlPositions);
+$stmtPositions->bindParam(':election_id', $electionId, PDO::PARAM_INT);
+$stmtPositions->execute();
+$positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
+
+// Step 2: Check if a specific position is selected by the user
+$positionName = "";
+if (isset($_POST['position_id'])) {
+    $selectedPositionId = $_POST['position_id'];
+    $positionNameGet = new Admin($pdo, 'positions');
+    $nameGetResult = $positionNameGet->read("position_id", $selectedPositionId);
+    $positionName = $nameGetResult[0]['position_name'];
+}
+
+// Step 3: Query to get candidate names and their votes for the selected position
+$sqlCandidatesVotes = "SELECT candidate_name, votes_count FROM Candidates WHERE election_id = :election_id AND position_id = :position_id";
+$stmtCandidatesVotes = $pdo->prepare($sqlCandidatesVotes);
+$stmtCandidatesVotes->bindParam(':election_id', $electionId, PDO::PARAM_INT);
+$stmtCandidatesVotes->bindParam(':position_id', $selectedPositionId, PDO::PARAM_INT);
+$stmtCandidatesVotes->execute();
+$candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Get the total number of candidates for the selected position
+$totalCandidates = count($candidatesData);
 
 ?>
-
-<!-- Your HTML code -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <title>Amanfoo - Vote Page</title>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        body {
-            background-color: #f5f5f5;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-        }
-
-        .flexItems {
-            display: flex;
-        }
-
-        nav {
-            text-align: center;
-            padding: 10px 20px;
-            height: 50px;
-            font-weight: bold;
-            font-size: x-large;
-            background-color: #ffc107;
-            border-radius: 3px;
-            color: #28a745;
-            margin-bottom: 7px;
-        }
-
-
-
-        .employeeCard {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 13px;
-            width: 96%;
-            margin: 20px auto;
-            background-color: #ffffff;
-            box-shadow: 0.2rem 0.4rem 12rem rgba(0, 0, 0, 0.08);
-        }
-
-        @media screen and (min-width: 992px) {
-            .employeeCard {
-                width: 520px;
-                height: 180px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            h3 {
-                text-align: center;
-                color: #28a745;
-            }
-
-            .centerImage {
-                margin-top: 15px !important;
-            }
-
-        }
-
-        h3 {
-            text-align: center;
-            color: #28a745;
-        }
-
-        .centerImage {
-            display: block;
-            margin: auto;
-            border-radius: 10px;
-        }
-
-        .cardChild {
-            height: 100%;
-        }
-
-        .cardimageSection {
-            width: 35%;
-            height: 100%;
-        }
-
-        .radio-section {
-            width: 10%
-        }
-
-        .radio-button {
-            width: 30px;
-            height: 30px;
-        }
-
-        .cardtextSection {
-            width: 55%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            margin-top: 5px;
-            margin-left: 8px;
-        }
-
-        .submit-btn {
-            border: 3px solid #28a745;
-            font-size: large;
-        }
-
-        .cardtextSection p {
-            font-size: larger;
-            color: rgb(116, 116, 201);
-            font-weight: 500;
-        }
-
-        /* Your existing styles */
-
-        .employeeCard {
-            border: 1px solid #ccc;
-            /* Default border color for the card */
-        }
-
-        /* Updated style to apply blue border for checked cards */
-        .employeeCard.checked {
-            border: 2px solid #28a745;
-            /* Blue border color for the checked card */
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Amanfoo Elections</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <nav>
-
-        <p>Amanfoo Voting Platform</p>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-success">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.php?electionid=<?php echo $electionId ?>">Amanfoo Elections </a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-warning" id="btnNavbarSearch" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
     </nav>
-    <!-- Your form and other HTML elements -->
-    <form method="POST" action="">
-        <fieldset>
-            <?php foreach ($positions as $position_id => $candidates) : ?>
-                <h3><?php echo get_position_name_by_id($position_id); ?></h3>
-                <?php foreach ($candidates as $candidate) : ?>
-                    <div class="employeeCard flexItems centerEmployeeCard" onclick="selectCard(this)">
-                        <!-- Display candidate information here -->
-                        <div class="cardimageSection">
-                            <img src="<?php echo $candidate['photo']; ?>" height="80%" width="90%" class="centerImage" />
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link active" href="index.php?electionid=<?php echo $electionId ?>">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            Dashboard
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Manage Elections</div>
+                        <a class="nav-link" href="./position.php?electionid=<?php echo $electionId ?>">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-chart-area"></i>
+                            </div>
+                            Position
+                        </a>
+                        <a class="nav-link" href="./candidates.php?electionid=<?php echo $electionId ?>">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Candidates
+                        </a>
+
+                        <a class="nav-link" href="./voters.php?electionid=<?php echo $electionId ?>">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Voters
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Interface</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-columns"></i>
+                            </div>
+                            Choose Election
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <?php
+                                foreach ($elections as $election) {
+                                    $electionId = $election['election_id'];
+                                    $electionName = $election['election_name'];
+
+                                    // Render the link with the election ID as a query string
+                                    echo '<a class="nav-link" href="./index.php?electionid=' . $electionId . '">' . $electionName . '</a>';
+                                }
+                                ?>
+                            </nav>
                         </div>
-                        <div class="cardtextSection">
-                            <h2 class="candidateName"><?php echo $candidate['candidate_name']; ?></h2>
-                            <p class="candidateHouse"><?php echo $candidate['candidate_house']; ?></p>
-                            <p class="candidateYear"><?php echo $candidate['candidate_yeargroup']; ?></p>
-                            <p class="candidateLocation"><?php echo $candidate['candidate_class']; ?></p>
+
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-2"><?php echo $title ?></h1>
+                    <ol class="breadcrumb mb-4">
+                        <!-- Modal -->
+                        <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">New Election</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="POST">
+                                            <div class="card-body">
+                                                <div class="form-group mb-4">
+                                                    <label for="electioneName">Election Name*</label>
+                                                    <input type="text" class="form-control" id="electioneName" name="electionName" placeholder="Enter the name of election" required>
+                                                </div>
+
+                                                <div class="form-group mb-4">
+                                                    <label for="startDate">Start Date*</label>
+                                                    <input type="date" class="form-control" name="startdate" id="startDate" required>
+                                                </div>
+
+                                                <div class="form-group mb-4">
+                                                    <label for="endDate">End Date*</label>
+                                                    <input type="date" class="form-control" name="enddate" id="endDate" required>
+                                                </div>
+
+
+                                            </div>
+                                            <!-- /.card-body -->
+
+                                            <div class="card-footer">
+                                                <button type="submit" name="submitCreateElection" class="btn btn-success mt-4">Add Election</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="radio-section">
-                            <input type="radio" class="radio-button" name="position_<?php echo $position_id; ?>" value="<?php echo $candidate['candidate_id']; ?>">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">New Election</button>
+                                </div>
+                                <div class="col">
+                                    <form method="post">
+                                        <label for="positionSelect">Select a Position:</label>
+                                        <select id="positionSelect" name="position_id" required>
+                                            <option value="" selected>select position</option>
+                                            <?php foreach ($positions as $position) : ?>
+                                                <option value="<?php echo $position['position_id']; ?>" <?php echo ($selectedPositionId == $position['position_id']) ? 'selected' : ''; ?>>
+                                                    <?php echo $position['position_name']; ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <button type="submit">Show Chart</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Modal -->
+
+
+                    </ol>
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-info text-white mb-4">
+                                <div class="card-body">
+                                    <h1><?php echo $positionCount ?></h1>
+                                    No. of Positions
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white">
+                                        <i class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body">
+                                    <h1><?php echo $candidateCount ?></h1>
+                                    Total Candidates
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white">
+                                        <i class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-success text-white mb-4">
+                                <div class="card-body">
+                                    <h1><?php echo $totalVoters ?></h1>
+                                    Total Voters
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white">
+                                        <i class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">
+                                    <h1><?php echo $votedVoters ?></h1>
+                                    Voters Voted
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white">
+                                        <i class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php endforeach; ?>
+                    <!-- CHARTS -->
+                    <h4 style="color: #198754;"><?php echo $positionName ?> Results</h4>
+                    <div class="row">
 
-            <!-- Your submit button -->
-            <div class="col-md-12 d-flex justify-content-center">
-                <input type="submit" class="submit-btn btn btn-warning mb-3" value="Submit Vote" name="submit">
-            </div>
-        </fieldset>
-    </form>
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    <?php echo $positionName ?> Results Bar Chart
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="myBarChart" width="100%" height="50"></canvas>
+                                </div>
+                                <div class="card-footer small text-muted">
+                                    Updated yesterday at 11:59 PM
+                                </div>
+                            </div>
+                        </div>
 
-    <!-- Your JavaScript code -->
-    <script>
-        // Your existing JavaScript code for handling the "checked" class
-        function selectCard(card) {
-            const radio = card.querySelector(".radio-button");
-            const cardsInSection = card.parentElement.querySelectorAll(".employeeCard");
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-pie me-1"></i>
+                                    <?php echo $positionName ?> Result Pie Chart
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="myPieChart" width="100%" height="50"></canvas>
+                                </div>
+                                <div class="card-footer small text-muted">
+                                    Updated yesterday at 11:59 PM
+                                </div>
+                            </div>
+                        </div>
 
-            cardsInSection.forEach((cardInSection) => {
-                cardInSection.classList.remove("checked");
-                const radioInSection = cardInSection.querySelector(".radio-button");
-                if (radioInSection !== radio) {
-                    radioInSection.checked = false;
-                }
-            });
+                    </div>
+                    <!-- CHARTS -->
 
-            card.classList.add("checked");
-            radio.checked = true;
-        }
-    </script>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <table class="table">
+                                    <thead class="table-warning">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Candidate</th>
+                                            <th scope="col">Vote</th>
+                                            <th scope="col">Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Calculate the total number of voters
+                                        $totalVoters = 0;
+                                        foreach ($candidatesData as $candidateData) {
+                                            $totalVoters += $candidateData['votes_count'];
+                                        }
+
+                                        // Calculate and display the table rows for each candidate
+                                        $count = 1;
+                                        foreach ($candidatesData as $candidateData) {
+                                            $candidateName = $candidateData['candidate_name'];
+                                            $votesCount = $candidateData['votes_count'];
+
+                                            // Check if the position has only one candidate
+                                            $positionHasSingleCandidate = (count($candidatesData) === 1);
+
+                                            echo "<tr>";
+                                            echo "<th>{$count}</th>";
+                                            echo "<td>{$candidateName}</td>";
+                                            echo "<td>{$votesCount}</td>";
+
+                                            // Display "Yes" or "No" based on the number of candidates and votes
+                                            if ($positionHasSingleCandidate) {
+                                                $noVotes = $totalVoters - $votesCount;
+                                                echo "<td>Yes: {$votesCount}, No: {$noVotes}</td>";
+                                            } else {
+                                                echo "<td>Multiple Candidates</td>";
+                                            }
+
+                                            echo "</tr>";
+
+                                            $count++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Amanfoo Voting Platform 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="./admin/js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="./admin/js/datatables-simple-demo.js"></script>
+    <?php
+    require_once "./admin/inc/footer.php";
+    ?>
+    <script>
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#ffc107';
+
+        // Bar Chart Example
+        var ctx = document.getElementById("myBarChart").getContext('2d');
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode(array_column($candidatesData, 'candidate_name')); ?>,
+                datasets: [{
+                    label: '# of Votes',
+                    backgroundColor: "rgba(40, 167, 69, 1)",
+                    borderColor: "rgba(2,117,216,1)",
+                    data: <?php echo json_encode(array_column($candidatesData, 'votes_count')); ?>,
+                }],
+            },
+            options: {
+                // Your options for the chart go here
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'candidate'
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 6
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            maxTicksLimit: 5
+                        },
+                        gridLines: {
+                            display: true
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                }
+            }
+        });
     </script>
+    <script>
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
 
-    <!-- Your Bootstrap and other scripts -->
+        // Pie Chart Example
+        var ctx = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: <?php echo json_encode(array_column($candidatesData, 'candidate_name')); ?>,
+                datasets: [{
+                    data: <?php echo json_encode(array_column($candidatesData, 'votes_count')); ?>,
+                    backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+                }],
+            },
+        });
+    </script>
 </body>
 
 </html>

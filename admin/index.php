@@ -379,6 +379,61 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
           </div>
           <!-- CHARTS -->
 
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card mb-4">
+                <table class="table">
+                  <thead class="table-warning">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Candidate</th>
+                      <th scope="col">Vote</th>
+                      <th scope="col">Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    // Calculate the total number of voters
+                    $totalVoters = 0;
+                    foreach ($candidatesData as $candidateData) {
+                      $totalVoters += $candidateData['votes_count'];
+                    }
+
+                    // Calculate and display the table rows for each candidate
+                    $count = 1;
+                    foreach ($candidatesData as $candidateData) {
+                      $candidateName = $candidateData['candidate_name'];
+                      $votesCount = $candidateData['votes_count'];
+
+                      // Check if the position has only one candidate
+                      $positionHasSingleCandidate = (count($candidatesData) === 1);
+
+                      echo "<tr>";
+                      echo "<th>{$count}</th>";
+                      echo "<td>{$candidateName}</td>";
+                      echo "<td>{$votesCount}</td>";
+
+                      // Display "Yes" or "No" based on the number of candidates and votes
+                      if ($positionHasSingleCandidate) {
+                        $noVotes = $totalVoters - $votesCount;
+                        echo "<td>Yes: {$votesCount}, No: {$noVotes}</td>";
+                      } else {
+                        echo "<td>Multiple Candidates</td>";
+                      }
+
+                      echo "</tr>";
+
+                      $count++;
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </main>
       <footer class="py-4 bg-light mt-auto">

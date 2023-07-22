@@ -197,7 +197,7 @@ if (isset($_POST['newCandidateSubmit'])) {
                             <nav class="sb-sidenav-menu-nested nav">
                                 <?php
                                 foreach ($elections as $election) {
-                                    $electionId = $_GET['electionid'];
+                                    $electionId = $election['election_id'];
                                     $electionName = $election['election_name'];
 
                                     // Render the link with the election ID as a query string
