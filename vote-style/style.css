@@ -20,26 +20,48 @@ body {
 nav {
   text-align: center;
   padding: 10px 20px;
-  height: 60px;
+  height: 50px;
   font-weight: bold;
   font-size: x-large;
-  background-color: #e1e0e0;
+  background-color: #ffc107;
   border-radius: 3px;
-}
-
-nav p {
-  width: 100%;
+  color: #28a745;
+  margin-bottom: 7px;
 }
 
 .employeeCard {
+  display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 13px;
-  height: 180px;
-  width: 520px;
+  width: 96%;
   margin: 20px auto;
   background-color: #ffffff;
   box-shadow: 0.2rem 0.4rem 12rem rgba(0, 0, 0, 0.08);
+}
+
+@media screen and (min-width: 992px) {
+  .employeeCard {
+    width: 520px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h3 {
+    text-align: center;
+    color: #ffc107;
+  }
+
+  .centerImage {
+    margin-top: 15px !important;
+  }
+}
+
+h3 {
+  text-align: center;
+  color: #28a745;
 }
 
 .centerImage {
@@ -53,15 +75,31 @@ nav p {
 }
 
 .cardimageSection {
-  width: 40%;
-  height: 75%;
+  width: 35%;
+  height: 100%;
+}
+
+.radio-section {
+  width: 10%;
+}
+
+.radio-button {
+  width: 30px;
+  height: 30px;
 }
 
 .cardtextSection {
-  width: 60%;
+  width: 55%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  margin-top: 5px;
+  margin-left: 8px;
+}
+
+.submit-btn {
+  border: 3px solid #28a745;
+  font-size: large;
 }
 
 .cardtextSection p {
@@ -70,70 +108,14 @@ nav p {
   font-weight: 500;
 }
 
-.cardtextSection h2 {
-  margin-top: 15px;
+/* Your existing styles */
+
+.employeeCard {
+  border: 1px solid #ccc;
+  /* Default border color for the card */
 }
 
-.bttn {
-  background: -webkit-linear-gradient(45deg, #e36577, #f6edb2);
-  padding: 5px;
-  border-radius: 20px;
-  width: 120px;
-  cursor: pointer;
-  margin-bottom: 15px;
-}
-
-.bttnCreate {
-  margin: 15px;
-}
-
-.bttn-delete {
-  margin-right: 15px;
-}
-
-.bttn:hover {
-  box-shadow: 0.2rem 0.4rem 1.2rem rgba(0, 0, 0, 0.08);
-  transform: scale(1.04);
-}
-
-.buttonWhite {
-  padding: 3px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-}
-
-.buttonBgGreen {
-  background-color: #3bbb59;
-}
-
-.buttonBgGreen p {
-  font-weight: bolder;
-  color: white;
-}
-
-.buttonBgWhite {
-  background-color: white;
-}
-
-.buttonWhite p {
-  font-size: large;
-  color: black;
-}
-
-.icons {
-  font-size: x-large;
-}
-
-.fa-pen-to-square {
-  color: rgb(116, 116, 201);
-}
-
-.fa-trash-can {
-  color: red;
-}
-
-.iconsDiv {
-  justify-content: space-between;
+/* Updated style to apply blue border for checked cards */
+.employeeCard.checked {
+  border: 2px solid #28a745;
 }

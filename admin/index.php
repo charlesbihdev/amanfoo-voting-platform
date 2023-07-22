@@ -34,7 +34,7 @@ $stmtPositions->execute();
 $positionCount = $stmtPositions->fetch(PDO::FETCH_ASSOC)['position_count'];
 
 // Retrieve the number of candidates for the specific election
-$sqlCandidates = "SELECT COUNT(DISTINCT candidate_id) AS candidate_count FROM Candidates WHERE election_id = :election_id";
+$sqlCandidates = "SELECT COUNT(DISTINCT candidate_id) AS candidate_count FROM candidates WHERE election_id = :election_id";
 $stmtCandidates = $pdo->prepare($sqlCandidates);
 $stmtCandidates->bindParam(':election_id', $electionId, PDO::PARAM_INT);
 $stmtCandidates->execute();
@@ -80,7 +80,7 @@ if (isset($_POST['submitCreateElection'])) {
 }
 
 
-$sqlPositions = "SELECT position_id, position_name FROM Positions WHERE election_id = :election_id";
+$sqlPositions = "SELECT position_id, position_name FROM positions WHERE election_id = :election_id";
 $stmtPositions = $pdo->prepare($sqlPositions);
 $stmtPositions->bindParam(':election_id', $electionId, PDO::PARAM_INT);
 $stmtPositions->execute();
@@ -96,7 +96,7 @@ if (isset($_POST['position_id'])) {
 }
 
 // Step 3: Query to get candidate names and their votes for the selected position
-$sqlCandidatesVotes = "SELECT candidate_name, votes_count FROM Candidates WHERE election_id = :election_id AND position_id = :position_id";
+$sqlCandidatesVotes = "SELECT candidate_name, votes_count FROM candidates WHERE election_id = :election_id AND position_id = :position_id";
 $stmtCandidatesVotes = $pdo->prepare($sqlCandidatesVotes);
 $stmtCandidatesVotes->bindParam(':election_id', $electionId, PDO::PARAM_INT);
 $stmtCandidatesVotes->bindParam(':position_id', $selectedPositionId, PDO::PARAM_INT);
