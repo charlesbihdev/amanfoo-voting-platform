@@ -1,6 +1,18 @@
 <?php
+session_start();
+
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
+
+if (isset($_SESSION['admin_id'])) {
+  // User is logged in
+  $AdminName = $_SESSION['admin_name'];
+} else {
+  // User is not logged in, you can redirect them to the login page
+  header("Location: login.php");
+  exit();
+}
+
 
 $electionType = new Admin($pdo, 'elections');
 if (isset($_GET['electionid'])) {
@@ -103,7 +115,6 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
   <title>Amanfoo Elections</title>
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-
   <link href="css/styles.css" rel="stylesheet" />
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
@@ -135,7 +146,7 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
           <li>
             <hr class="dropdown-divider" />
           </li>
-          <li><a class="dropdown-item" href="#!">Logout</a></li>
+          <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -197,7 +208,7 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="sb-sidenav-footer">
           <div class="small">Logged in as:</div>
-          Admin
+          <?php echo $AdminName ?>
         </div>
       </nav>
     </div>
@@ -390,6 +401,9 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
 
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script src="js/datatables-simple-demo.js"></script>
+  <?php
+  require_once "./inc/footer.php";
+  ?>
   <script>
     // Set new default font family and font color to mimic Bootstrap's default styling
     Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';

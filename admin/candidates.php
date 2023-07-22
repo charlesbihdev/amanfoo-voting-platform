@@ -1,6 +1,17 @@
 <?php
+session_start();
+
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
+
+if (isset($_SESSION['admin_id'])) {
+    // User is logged in
+    $AdminName = $_SESSION['admin_name'];
+} else {
+    // User is not logged in, you can redirect them to the login page
+    header("Location: login.php");
+    exit();
+}
 
 $electionType = new Admin($pdo, 'elections');
 if (isset($_GET['electionid'])) {
@@ -92,16 +103,6 @@ if (isset($_POST['newCandidateSubmit'])) {
 }
 
 
-// print_r($electionTypeResult);
-
-// $event = new Admin($pdo, 'tbl_events');
-// $eventResult = $event->readWithLimit(3, "event_id");
-
-// $testimonials = new Admin($pdo, 'tbl_testimonials');
-// $testimonialResults = $testimonials->readWithLimit(3, "id");
-
-// $projects = new Admin($pdo, 'tbl_testimonials');
-// $testimonialResults = $testimonials->readWithLimit(3, "id");
 
 ?>
 <!DOCTYPE html>
@@ -147,10 +148,11 @@ if (isset($_POST['newCandidateSubmit'])) {
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
                 </ul>
             </li>
         </ul>
+
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -209,7 +211,8 @@ if (isset($_POST['newCandidateSubmit'])) {
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Admin
+                    <?php echo $AdminName ?>
+
                 </div>
             </nav>
         </div>

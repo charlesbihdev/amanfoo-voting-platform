@@ -1,6 +1,17 @@
 <?php
+session_start();
+
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
+
+if (isset($_SESSION['admin_id'])) {
+  // User is logged in
+  $AdminName = $_SESSION['admin_name'];
+} else {
+  // User is not logged in, you can redirect them to the login page
+  header("Location: login.php");
+  exit();
+}
 
 $electionType = new Admin($pdo, 'elections');
 if (isset($_GET['electionid'])) {
@@ -85,7 +96,7 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
           <li>
             <hr class="dropdown-divider" />
           </li>
-          <li><a class="dropdown-item" href="#!">Logout</a></li>
+          <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -147,7 +158,8 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="sb-sidenav-footer">
           <div class="small">Logged in as:</div>
-          Admin
+          <?php echo $AdminName ?>
+
         </div>
       </nav>
     </div>

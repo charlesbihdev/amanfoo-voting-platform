@@ -17,6 +17,6 @@ if (isset($_GET['id']) && isset($_GET['electionid'])) {
     exit();
 } else {
     // If the position ID or election ID is not provided, redirect to the position.php page
-    header("Location: position.php");
-    exit();
+    header('location: logout.php');
+    exit;
 }

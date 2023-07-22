@@ -6,6 +6,16 @@ if (isset($_GET['id']) && isset($_GET['electionid'])) {
     $votersId = $_GET['id'];
     $electionId = $_GET['electionid'];
 
+    //find the name of the candidate's photo
+    $voterToBeDel = new Admin($pdo, 'users');
+    $results = $voterToBeDel->read("user_id", $votersId);
+    $photo = $results[0]['photo'];
+
+    // Unlink the photo
+    if ($photo != '') {
+        unlink('./assets/uploads/' . $photo);
+    }
+
     // Perform the deletion query using the existing PDO object
     $stmt = $pdo->prepare("DELETE FROM users WHERE user_id = :user_id");
     $stmt->bindParam(':user_id', $votersId, PDO::PARAM_INT);
@@ -16,6 +26,6 @@ if (isset($_GET['id']) && isset($_GET['electionid'])) {
     exit();
 } else {
     // If the candidate ID is not provided, redirect to the index.php page
-    header("Location: voters.php");
-    exit();
+    header('location: logout.php');
+    exit;
 }

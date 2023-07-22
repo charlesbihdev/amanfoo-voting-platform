@@ -1,6 +1,17 @@
 <?php
+session_start();
+
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
+
+if (isset($_SESSION['admin_id'])) {
+    // User is logged in
+    $AdminName = $_SESSION['admin_name'];
+} else {
+    // User is not logged in, you can redirect them to the login page
+    header("Location: login.php");
+    exit();
+}
 
 $electionType = new Admin($pdo, 'elections');
 if (isset($_GET['electionid'])) {
@@ -46,16 +57,6 @@ $stmtVoters->execute();
 $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
 
 
-
-// $event = new Admin($pdo, 'tbl_events');
-// $eventResult = $event->readWithLimit(3, "event_id");
-
-// $testimonials = new Admin($pdo, 'tbl_testimonials');
-// $testimonialResults = $testimonials->readWithLimit(3, "id");
-
-// $projects = new Admin($pdo, 'tbl_testimonials');
-// $testimonialResults = $testimonials->readWithLimit(3, "id");
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,8 +69,10 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
     <meta name="author" content="" />
     <title>Amanfoo Voting Platform</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -99,7 +102,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -161,7 +164,8 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Admin
+                    <?php echo $AdminName ?>
+
                 </div>
             </nav>
         </div>
@@ -259,7 +263,6 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <?php
