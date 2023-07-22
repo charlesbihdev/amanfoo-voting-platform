@@ -66,11 +66,11 @@ if (isset($_POST["submit"])) {
         // You can also store the user's vote information in the database if needed
         // For example, you can create a 'votes' table and insert a new vote record with the user_id and selected candidate_id
         // This allows you to keep track of each user's vote history
-
-        // Redirect the user to a "Thank You" page or any other page after voting is successful
-        header("Location: thank_you.php");
-        exit();
     }
+
+    // Redirect the user to a "Thank You" page or any other page after voting is successful
+    header("Location: thank_you.php");
+    exit();
 }
 
 ?>
@@ -230,7 +230,7 @@ if (isset($_POST["submit"])) {
                     <div class="employeeCard flexItems centerEmployeeCard" onclick="selectCard(this)">
                         <!-- Display candidate information here -->
                         <div class="cardimageSection">
-                            <img src="<?php echo $candidate['photo']; ?>" height="80%" width="90%" class="centerImage" />
+                            <img src="./admin/assets/uploads/<?php echo $candidate['photo']; ?>" height="80%" width="90%" class="centerImage" />
                         </div>
                         <div class="cardtextSection">
                             <h2 class="candidateName"><?php echo $candidate['candidate_name']; ?></h2>
@@ -239,7 +239,7 @@ if (isset($_POST["submit"])) {
                             <p class="candidateLocation"><?php echo $candidate['candidate_class']; ?></p>
                         </div>
                         <div class="radio-section">
-                            <input type="radio" class="radio-button" name="position_<?php echo $position_id; ?>" value="<?php echo $candidate['candidate_id']; ?>">
+                            <input type="radio" class="radio-button" name="position_<?php echo $position_id; ?>" value="<?php echo $candidate['candidate_id']; ?>" required>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -254,23 +254,27 @@ if (isset($_POST["submit"])) {
 
     <!-- Your JavaScript code -->
     <script>
-        // Your existing JavaScript code for handling the "checked" class
         function selectCard(card) {
             const radio = card.querySelector(".radio-button");
             const cardsInSection = card.parentElement.querySelectorAll(".employeeCard");
 
             cardsInSection.forEach((cardInSection) => {
-                cardInSection.classList.remove("checked");
                 const radioInSection = cardInSection.querySelector(".radio-button");
-                if (radioInSection !== radio) {
-                    radioInSection.checked = false;
+                if (radioInSection.name === radio.name) {
+                    // Check if the radio button belongs to the same group
+                    if (radioInSection !== radio) {
+                        radioInSection.checked = false;
+                        cardInSection.classList.remove("checked");
+                    } else {
+                        cardInSection.classList.add("checked");
+                    }
                 }
             });
 
-            card.classList.add("checked");
             radio.checked = true;
         }
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
     </script>
