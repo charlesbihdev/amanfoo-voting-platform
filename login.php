@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "./admin/database/config.php";
 require_once "./admin/auxilliaries.php";
 
@@ -18,13 +19,19 @@ if (isset($_POST['submit'])) {
         $results = $userToBeLogged->read("email", $email);
         //CHECK IF THE NUMBER OF ROW RETURNED IS > 0
         if (!empty($results)) {
+            print_r($results[0]);
             $retrievedEmail = $results[0]["email"];
             $retrievedVoterId = $results[0]["voter_id"];
+            $retrievedUserId = $results[0]["user_id"];
+            $ElectionId = $results[0]["election_id"];
 
             //CHECK IF USER EMAIL IS EQUAL TO RETRIEVED EMAIL AND USER PASSWORD IS EQUAL TO RETRIEVED PASSWORD
             if ($email == $retrievedEmail && $voterid == $retrievedVoterId) {
-                //REDIRECT USER TO BLOG PAGE
-                header("location: ./vote.php");
+                //SESSION HERE
+                $_SESSION['user_id'] = $retrievedUserId;
+                $_SESSION['election_id'] = $ElectionId;
+                //REDIRECT USER TO VOTE PAGE
+                header("location: ./votepage.php");
                 exit();
             } else {
                 //SHOW ERROR TO USER

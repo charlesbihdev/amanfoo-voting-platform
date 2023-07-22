@@ -121,3 +121,24 @@ function generateRandomString($length = 6)
     }
     return $randomString;
 };
+
+
+// Function to get the position name by ID
+function get_position_name_by_id($position_id)
+{
+    // Your database query to fetch the position name based on the position_id
+    // For example:
+    global $pdo;
+    $sql = "SELECT position_name FROM positions WHERE position_id = :position_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':position_id', $position_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Check if the position name was found
+    if ($result) {
+        return $result['position_name'];
+    } else {
+        return "Unknown Position";
+    }
+}

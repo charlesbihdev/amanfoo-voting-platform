@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require_once "./admin/database/config.php";
 require_once "./admin/auxilliaries.php";
 
@@ -9,6 +7,7 @@ if (isset($_SESSION['user_id'])) {
     // You can access the user ID and other information from session variables like this:
     $user_id = $_SESSION['user_id'];
     $election_id = $_SESSION['election_id'];
+    // ... (other user-specific operations)
 } else {
     // User is not logged in, you can redirect them to the login page
     header("Location: login.php");
