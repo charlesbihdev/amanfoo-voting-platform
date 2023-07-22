@@ -11,7 +11,7 @@ date_default_timezone_set('Asia/Dhaka');
 $dbhost = 'localhost';
 
 //port
-$port = 3307;
+$port = 3308;
 // Database Name
 $dbname = 'amanfoo_db';
 

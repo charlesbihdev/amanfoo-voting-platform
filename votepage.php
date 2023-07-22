@@ -40,8 +40,10 @@ require_once "./admin/auxilliaries.php";
             height: 50px;
             font-weight: bold;
             font-size: x-large;
-            background-color: #e1e0e0;
+            background-color: #ffc107;
             border-radius: 3px;
+            color: #28a745;
+            margin-bottom: 7px;
         }
 
 
@@ -69,7 +71,7 @@ require_once "./admin/auxilliaries.php";
 
         .cardimageSection {
             width: 35%;
-            height: 80%;
+            height: 100%;
         }
 
         .radio-section {
@@ -96,6 +98,20 @@ require_once "./admin/auxilliaries.php";
             color: rgb(116, 116, 201);
             font-weight: 500;
         }
+
+        /* Your existing styles */
+
+        .employeeCard {
+            border: 1px solid #ccc;
+            /* Default border color for the card */
+        }
+
+        /* Updated style to apply blue border for checked cards */
+        .employeeCard.checked {
+            border: 2px solid #28a745;
+            /* Blue border color for the checked card */
+        }
+    </style>
     </style>
 </head>
 
@@ -105,32 +121,102 @@ require_once "./admin/auxilliaries.php";
         <p>Amanfoo Voting Platform</p>
     </nav>
     <main>
-        <div>
-            <h2 class="my-3">PRESIDENT</h2>
-        </div>
+        <form method="POST" action="">
+            <fieldset>
+                <!-- President Section -->
+                <div>
+                    <h3>PRESIDENT</h3>
+                    <div class="employeeCard flexItems centerEmployeeCard" onclick="selectCard(this)">
+                        <div class="cardChild cardimageSection">
+                            <img src="./image_64b865d3b5021.jpg" height="80%" width="90%" class="centerImage" />
+                        </div>
+                        <div class="cardtextSection">
+                            <h2 class="candidateName">Candidate 1</h2>
+                            <p class="candidateHouse">House</p>
+                            <p class="candidateYear">Year</p>
+                            <p class="candidateLocation">Location</p>
+                        </div>
+                        <div class="radio-section">
+                            <input type="radio" class="radio-button" name="president" value="candidate1">
+                        </div>
+                    </div>
 
-        <!-- INDIVIDUAL CARD ITEMS -->
+                    <div class="employeeCard flexItems centerEmployeeCard" onclick="selectCard(this)">
+                        <div class="cardChild cardimageSection">
+                            <img src="./image_64b865d3b5021.jpg" height="80%" width="90%" class="centerImage" />
+                        </div>
+                        <div class="cardtextSection">
+                            <h2 class="candidateName">Candidate 2</h2>
+                            <p class="candidateHouse">House</p>
+                            <p class="candidateYear">Year</p>
+                            <p class="candidateLocation">Location</p>
+                        </div>
+                        <div class="radio-section">
+                            <input type="radio" class="radio-button" name="president" value="candidate2">
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Organizer Section -->
+                <div>
+                    <h3>ORGANIZER</h3>
+                    <div class="employeeCard flexItems centerEmployeeCard" onclick="selectCard(this)">
+                        <div class="cardChild cardimageSection">
+                            <img src="./image_64b865d3b5021.jpg" height="80%" width="90%" class="centerImage" />
+                        </div>
+                        <div class="cardtextSection">
+                            <h2 class="candidateName">Candidate 3</h2>
+                            <p class="candidateHouse">House</p>
+                            <p class="candidateYear">Year</p>
+                            <p class="candidateLocation">Location</p>
+                        </div>
+                        <div class="radio-section">
+                            <input type="radio" class="radio-button" name="organizer" value="candidate3">
+                        </div>
+                    </div>
 
-        <div class="employeeCard flexItems centerEmployeeCard">
-            <div class="cardChild cardimageSection">
-                <img src="./image_64b865d3b5021.jpg" height="80%" width="90%" class="centerImage" />
-            </div>
-            <div class="cardtextSection">
-                <h2 class="candidateName">Charle Bih</h2>
-                <p class="candidateHouse"> House</p>
-                <p class="candidateYear"> Year</p>
-                <p class="candidateLocation">Location</p>
+                    <div class="employeeCard flexItems centerEmployeeCard" onclick="selectCard(this)">
+                        <div class="cardChild cardimageSection">
+                            <img src="./image_64b865d3b5021.jpg" height="80%" width="90%" class="centerImage" />
+                        </div>
+                        <div class="cardtextSection">
+                            <h2 class="candidateName">Candidate 4</h2>
+                            <p class="candidateHouse">House</p>
+                            <p class="candidateYear">Year</p>
+                            <p class="candidateLocation">Location</p>
+                        </div>
+                        <div class="radio-section">
+                            <input type="radio" class="radio-button" name="organizer" value="candidate4">
+                        </div>
+                    </div>
+                </div>
 
-            </div>
-            <div class="radio-section">
-                <input type="radio" class="radio-button">
-            </div>
-        </div>
+                <!-- Submit Button -->
+                <div>
+                    <input type="submit" class="btn btn-warning mb-3 mx-auto" value="Submit Vote" name="submit">
+                </div>
+            </fieldset>
+        </form>
 
-        <!-- END OF CARD ITEM -->
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script>
+            // JavaScript to handle adding/removing the "checked" class when cards are clicked
+            function selectCard(card) {
+                const radio = card.querySelector(".radio-button");
+                const cardsInSection = card.parentElement.querySelectorAll(".employeeCard");
+
+                cardsInSection.forEach((cardInSection) => {
+                    cardInSection.classList.remove("checked");
+                    const radioInSection = cardInSection.querySelector(".radio-button");
+                    if (radioInSection !== radio) {
+                        radioInSection.checked = false;
+                    }
+                });
+
+                card.classList.add("checked");
+                radio.checked = true;
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
 </body>
 
