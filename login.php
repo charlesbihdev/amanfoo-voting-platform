@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
         $results = $userToBeLogged->read("email", $email);
         //CHECK IF THE NUMBER OF ROW RETURNED IS > 0
         if (!empty($results)) {
-            print_r($results[0]);
+
             $retrievedEmail = $results[0]["email"];
             $retrievedVoterId = $results[0]["voter_id"];
             $retrievedUserId = $results[0]["user_id"];

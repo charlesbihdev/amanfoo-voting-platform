@@ -42,8 +42,8 @@ nav {
 
 @media screen and (min-width: 992px) {
   .employeeCard {
-    width: 520px;
-    height: 180px;
+    width: 540px;
+    height: 195px;
     display: flex;
     justify-content: center;
     align-items: center;

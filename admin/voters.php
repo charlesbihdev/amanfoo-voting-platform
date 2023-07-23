@@ -21,7 +21,8 @@ if (isset($_GET['electionid'])) {
     $electionTypeResult = $electionType->readAll("election_id");
     $electionId = $electionTypeResult[count($electionTypeResult) - 1]['election_id'];
 }
-
+$electionTypeResult = $electionType->read("election_id", $electionId);
+$currentElectionName = $electionTypeResult[0]['election_name'];
 
 // Fetch election data from the database
 $sqlElections = "SELECT * FROM elections";
@@ -29,20 +30,6 @@ $stmtElections = $pdo->prepare($sqlElections);
 $stmtElections->execute();
 $elections = $stmtElections->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_POST['submitCreateElection'])) {
-    $newElectionName = $_POST['electionName'];
-    $newElectionStartDate = $_POST['startdate'];
-    $newElectionEndDate = $_POST['enddate'];
-    $newElection = new Admin($pdo, 'elections');
-    $data = [
-        'election_name' => $newElectionName,
-        'start_date' => $newElectionStartDate,
-        'end_date' => $newElectionEndDate
-    ];
-    $newElection->create($data);
-}
-$electionTypeResult = $electionType->read("election_id", $electionId);
-$currentElectionName = $electionTypeResult[0]['election_name'];
 
 // Fetch voters' data from the database
 $sqlVoters = "SELECT u.*, COUNT(v.vote_id) AS vote_count
@@ -78,7 +65,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-success">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.php">Amanfoo Voting App</a>
+        <a class="navbar-brand ps-3" href="index.php">Amanfoo Voting Platform</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
             <i class="fas fa-bars"></i>

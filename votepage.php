@@ -15,6 +15,24 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Fetch voters' data from the database
+$sqlVoters = "SELECT u.*, COUNT(v.vote_id) AS vote_count
+              FROM users u
+              LEFT JOIN votes v ON u.user_id = v.user_id
+              WHERE u.user_id = :user_id
+              GROUP BY u.user_id";
+
+$stmtVoters = $pdo->prepare($sqlVoters);
+$stmtVoters->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+$stmtVoters->execute();
+$voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
+
+if ($voters[0]['vote_count'] > 0) {
+    // User is already voted, redirect them to the already voted page
+    header("Location: alreadyvoted.php");
+    exit();
+}
+
 // Step 1: Fetch candidates based on their positions and the election_id
 $sql = "SELECT * FROM candidates WHERE election_id = :election_id ORDER BY position_id";
 $stmt = $pdo->prepare($sql);
@@ -131,10 +149,10 @@ if (isset($_POST["submit"])) {
                             <img src="./admin/assets/uploads/<?php echo $candidate['photo']; ?>" height="80%" width="90%" class="centerImage" />
                         </div>
                         <div class="cardtextSection">
-                            <h2 class="candidateName"><?php echo $candidate['candidate_name']; ?></h2>
-                            <p class="candidateHouse"><?php echo $candidate['candidate_house']; ?></p>
-                            <p class="candidateYear"><?php echo $candidate['candidate_yeargroup']; ?></p>
-                            <p class="candidateLocation"><?php echo $candidate['candidate_class']; ?></p>
+                            <h4 class="candidateName"><?php echo $candidate['candidate_name']; ?></h3>
+                                <p class="candidateHouse"><?php echo $candidate['candidate_house']; ?></p>
+                                <p class="candidateYear"><?php echo $candidate['candidate_yeargroup']; ?></p>
+                                <p class="candidateLocation"><?php echo $candidate['candidate_class']; ?></p>
                         </div>
                         <div class="radio-section">
                             <label for="yes_<?php echo $position_id; ?>">
@@ -158,7 +176,7 @@ if (isset($_POST["submit"])) {
                             <img src="./admin/assets/uploads/<?php echo $candidate['photo']; ?>" height="80%" width="90%" class="centerImage" />
                         </div>
                         <div class="cardtextSection">
-                            <h2 class="candidateName"><?php echo $candidate['candidate_name']; ?></h2>
+                            <h4 class="candidateName"><?php echo $candidate['candidate_name']; ?></h4>
                             <p class="candidateHouse"><?php echo $candidate['candidate_house']; ?></p>
                             <p class="candidateYear"><?php echo $candidate['candidate_yeargroup']; ?></p>
                             <p class="candidateLocation"><?php echo $candidate['candidate_class']; ?></p>

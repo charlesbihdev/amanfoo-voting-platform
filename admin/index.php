@@ -20,7 +20,7 @@ if (isset($_GET['electionid'])) {
   $electionTypeResult = $electionType->read("election_id", $electionId);
 } else {
   $electionTypeResult = $electionType->readAll("election_id");
-  $electionId = $electionTypeResult[count($electionTypeResult) - 1]['election_id'];
+  $electionId = $electionTypeResult[0]['election_id'];
 }
 //GET DASHBOARD TITLE
 $dasboardTitle = $electionType->read("election_id", $electionId);
@@ -49,7 +49,7 @@ $stmtTotalVoters->execute();
 $totalVoters = $stmtTotalVoters->fetch(PDO::FETCH_ASSOC)['total_voters'];
 
 // Retrieve the number of voters who have voted for the specific election
-$sqlVotedVoters = "SELECT COUNT(DISTINCT user_id) AS voted_voters FROM Votes WHERE candidate_id IN (
+$sqlVotedVoters = "SELECT COUNT(DISTINCT user_id) AS voted_voters FROM votes WHERE candidate_id IN (
   SELECT candidate_id FROM Candidates WHERE election_id = :election_id
 )";
 $stmtVotedVoters = $pdo->prepare($sqlVotedVoters);
@@ -122,7 +122,7 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
 <body class="sb-nav-fixed">
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-success">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.php?electionid=<?php echo $electionId ?>">Amanfoo Elections </a>
+    <a class="navbar-brand ps-3" href="index.php?electionid=<?php echo $electionId ?>">Amanfoo Voting Platform </a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
       <i class="fas fa-bars"></i>
@@ -394,9 +394,9 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
                   <tbody>
                     <?php
                     // Calculate the total number of voters
-                    foreach ($candidatesData as $candidateData) {
-                      $totalVoters += $candidateData['votes_count'];
-                    }
+                    // foreach ($candidatesData as $candidateData) {
+                    //   $totalVoters += $candidateData['votes_count'];
+                    // }
 
                     // Calculate and display the table rows for each candidate
                     $count = 1;
@@ -486,12 +486,13 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
               display: false
             },
             ticks: {
-              maxTicksLimit: 6
+              maxTicksLimit: 7
             }
           }],
           yAxes: [{
             ticks: {
               min: 0,
+              max: <?php echo $totalVoters ?>,
               maxTicksLimit: 5
             },
             gridLines: {
