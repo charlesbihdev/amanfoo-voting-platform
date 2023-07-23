@@ -356,7 +356,7 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
                   <canvas id="myBarChart" width="100%" height="50"></canvas>
                 </div>
                 <div class="card-footer small text-muted">
-                  Updated yesterday at 11:59 PM
+                  Updated just now...
                 </div>
               </div>
             </div>
@@ -371,8 +371,7 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
                   <canvas id="myPieChart" width="100%" height="50"></canvas>
                 </div>
                 <div class="card-footer small text-muted">
-                  Updated yesterday at 11:59 PM
-                </div>
+                  Updated just now... </div>
               </div>
             </div>
 
@@ -395,7 +394,6 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
                   <tbody>
                     <?php
                     // Calculate the total number of voters
-                    $totalVoters = 0;
                     foreach ($candidatesData as $candidateData) {
                       $totalVoters += $candidateData['votes_count'];
                     }
@@ -416,7 +414,7 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
 
                       // Display "Yes" or "No" based on the number of candidates and votes
                       if ($positionHasSingleCandidate) {
-                        $noVotes = $totalVoters - $votesCount;
+                        $noVotes = $votedVoters - $votesCount;
                         echo "<td>Yes: {$votesCount}, No: {$noVotes}</td>";
                       } else {
                         echo "<td>Multiple Candidates</td>";
