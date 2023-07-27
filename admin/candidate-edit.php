@@ -15,6 +15,7 @@ if (isset($_SESSION['admin_id'])) {
 
 if (isset($_GET['id'])) {
     $candidateId = $_GET['id'];
+    $electionId = $_GET['electionid'];
 
     // Fetch candidate details from the database
     $sqlCandidate = "SELECT
@@ -65,6 +66,9 @@ if (isset($_POST['editCandidateSubmit'])) {
         $image = $_FILES['photo'];
         $destinationDirectory = './assets/uploads';
         $uploadedImage = uploadImage($image, $destinationDirectory);
+        if ($candidate['photo'] != '') {
+            unlink('./assets/uploads/' . $candidate['photo']);
+        }
         // Update candidate details in the database
         $sqlUpdateCandidate = "UPDATE candidates SET
             candidate_name = :candidate_name,
@@ -88,7 +92,7 @@ if (isset($_POST['editCandidateSubmit'])) {
 
         if ($stmtUpdateCandidate->execute()) {
             $message = "Update Successful";
-            header("Location: ./candidates.php?electionid={$_GET['electionid']}");
+            header("Location: ./candidates.php?electionid={$electionId}");
         } else {
             $message = "Unable to update. Try again";
         }
@@ -244,7 +248,7 @@ if (isset($_POST['editCandidateSubmit'])) {
                                                         <input type="tel" class="form-control" id="candidatePhone" name="candidatePhone" value="<?php echo $candidate['candidate_phone']; ?>" required>
                                                     </div>
                                                     <div class="form-group mb-4">
-                                                        <label for="candidateClass">Candidate Class</label>
+                                                        <label for="candidateClass">Candidate Location</label>
                                                         <input type="text" class="form-control" id="candidateClass" name="candidateClass" value="<?php echo $candidate['candidate_class']; ?>" required>
                                                     </div>
                                                     <div class="form-group mb-4">

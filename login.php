@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="voterid" name="voterid" type="name" placeholder="Enter your Voter Id" required />
-                                            <label for="voterid">Voter Id</label>
+                                            <label for="voterid">Voter ID</label>
                                         </div>
                                         <!-- <div class="form-check mb-3">
                                             <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />

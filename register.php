@@ -27,7 +27,6 @@ if (isset($_POST['submit'])) {
     $voterId = generateRandomString(6) . $selectedElectionId;
 
     // Handle unavailable info (whether null or empty)
-    $candidateVotedForId = null; // or set to the appropriate value
     $positionId = null; // or set to the appropriate value
 
     if (!empty($fullname) && !empty($email) && !empty($house) && !empty($location) && !empty($selectedElectionId) && $uploadedImage) {
@@ -40,7 +39,6 @@ if (isset($_POST['submit'])) {
             'voter_id' => $voterId,
             'house' => $house,
             'location' => $location,
-            'candidate_voted_for_id' => $candidateVotedForId,
             'election_id' => $selectedElectionId
         ];
         $newUser->create($data);
@@ -95,7 +93,7 @@ if (isset($_POST['submit'])) {
                                     <form method="POST" action="" enctype="multipart/form-data">
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="fullname" type="text" name="fullname" placeholder="Enter your full name" required />
-                                            <label for="fullname">Fullname</label>
+                                            <label for="fullname">Full Name</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="email" type="email" placeholder="Enter your email" name="email" required />
@@ -104,7 +102,7 @@ if (isset($_POST['submit'])) {
 
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="photo" name="photo" type="file" required />
-                                            <label for="photo">Upload your Photo</label>
+                                            <label for="photo">Upload your Photo (Passport Size)</label>
                                         </div>
 
                                         <div class="row mb-3">
@@ -117,7 +115,7 @@ if (isset($_POST['submit'])) {
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input class="form-control" id="location" type="text" placeholder="Enter your Location" name="location" required />
-                                                    <label for="location">Location</label>
+                                                    <label for="location">Location(Residence)</label>
                                                 </div>
                                             </div>
                                         </div>

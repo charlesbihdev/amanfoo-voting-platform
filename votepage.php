@@ -73,13 +73,6 @@ if (isset($_POST["submit"])) {
                     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Replace $user_id with the actual user ID of the voter
                     $stmt->bindParam(':candidate_id', $selectedCandidateId, PDO::PARAM_INT);
                     $stmt->execute();
-
-                    // Update the user's candidate_voted_for_id in the users table (optional)
-                    $sql = "UPDATE users SET candidate_voted_for_id = :candidate_id WHERE user_id = :user_id";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-                    $stmt->bindParam(':candidate_id', $selectedCandidateId, PDO::PARAM_INT);
-                    $stmt->execute();
                 }
             }
         } else {
@@ -97,13 +90,6 @@ if (isset($_POST["submit"])) {
                 $sql = "INSERT INTO votes (user_id, candidate_id) VALUES (:user_id, :candidate_id)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Replace $user_id with the actual user ID of the voter
-                $stmt->bindParam(':candidate_id', $selectedCandidateId, PDO::PARAM_INT);
-                $stmt->execute();
-
-                // Update the user's candidate_voted_for_id in the users table (optional)
-                $sql = "UPDATE users SET candidate_voted_for_id = :candidate_id WHERE user_id = :user_id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
                 $stmt->bindParam(':candidate_id', $selectedCandidateId, PDO::PARAM_INT);
                 $stmt->execute();
             }

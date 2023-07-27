@@ -4,6 +4,8 @@ require_once "./admin/auxilliaries.php";
 
 if (isset($_GET['voterid'])) {
     $voterId = $_GET['voterid'];
+} else {
+    header("location: ./register.php");
 }
 ?>
 <!DOCTYPE html>
@@ -40,7 +42,7 @@ if (isset($_GET['voterid'])) {
                                 <h4 class="modal-title" id="myModalLabel">Login Page Confirmation</h4>
                             </div>
                             <div class="modal-body">
-                                <p>Have you written your voters Id down?</p>
+                                <p>Have you written your voters ID down?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -54,7 +56,7 @@ if (isset($_GET['voterid'])) {
                         <div class="col-lg-7">
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4 text-success">Keep Your Voter Id Safe</h3>
+                                    <h3 class="text-center font-weight-light my-4 text-success">Keep Your Voter ID Safe</h3>
                                 </div>
                                 <div class="card-body">
                                     <form method="POST" action="" enctype="multipart/form-data">
@@ -64,7 +66,7 @@ if (isset($_GET['voterid'])) {
                                             <div class="col-md mx-auto">
                                                 <div class="form-floating mb-3 mb-md-0">
                                                     <input style="font-size: larger; font-weight: bolder;" class="form-control text-center " id="inputPasswordConfirm" type="text" value="<?php echo $voterId ?>" readonly />
-                                                    <label for="uniqueVoterId">Your Unique Voter ID</label>
+                                                    <label for="uniqueVoterId">Your Unique Voter ID (7 digits)</label>
                                                 </div>
                                             </div>
                                         </div>

@@ -144,7 +144,7 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
               <nav class="sb-sidenav-menu-nested nav">
                 <?php
                 foreach ($elections as $election) {
-                  $electionId = $_GET['electionid'];
+                  $electionId = $election['election_id'];
                   $electionName = $election['election_name'];
 
                   // Render the link with the election ID as a query string
@@ -251,6 +251,7 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
                     $positionName = $position['position_name'];
                     $positionId = $position['position_id'];
                     $maxVote = $position['max_vote'];
+                    $electionId = $_GET['electionid'];
                   ?>
                     <tr>
                       <td><?php echo $i; ?></td>
