@@ -4,9 +4,11 @@ session_start();
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
 
-if (isset($_SESSION['admin_id'])) {
+if (isset($_SESSION['admin_id']) && isset($_SESSION['isSuperAdmin']) && isset($_SESSION['admin_name'])) {
     // User is logged in
     $AdminName = $_SESSION['admin_name'];
+    $isSuperAdmin = $_SESSION['isSuperAdmin'];
+    $isSuperAdmin != 1 ? $hideIfNotAdmin = "hideIfNotAdmin" : $hideIfNotAdmin = "";
 } else {
     // User is not logged in, you can redirect them to the login page
     header("Location: login.php");
@@ -59,7 +61,11 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-
+    <style>
+        .hideIfNotAdmin {
+            visibility: hidden;
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -221,7 +227,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo $voter['voter_id']; ?></td>
                                             <td><?php echo $voter['vote_count'] > 0 ? 'Yes' : 'No'; ?></td>
                                             <td>
-                                                <a href="#" data-href="voters-delete.php?id=<?php echo $voter['user_id'] . "&electionid=" . $_GET['electionid'] ?>" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete">Delete</a>
+                                                <a href="#" data-href="voters-delete.php?id=<?php echo $voter['user_id'] . "&electionid=" . $_GET['electionid'] ?>" class="btn btn-danger btn-xs <?php echo $hideIfNotAdmin ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>
 
                                             </td>
                                         </tr>

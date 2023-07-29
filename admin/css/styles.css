@@ -11483,7 +11483,7 @@ body {
   color: #fff;
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
-  color: #ffc107
+  color: #ffc107;
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link.active {
   color: #ffc107;
@@ -11721,4 +11721,8 @@ body {
 
 .colored-toast .swal2-html-container {
   color: white;
+}
+
+.hideIfNotAdmin {
+  display: none;
 }

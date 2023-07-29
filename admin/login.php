@@ -23,12 +23,15 @@ if (isset($_POST['submit'])) {
             $retrievedAdminId = $results[0]["admin_id"];
             $retrievedId = $results[0]["id"];
             $AdminName = $results[0]["admin_name"];
+            $isSuperAdmin = $results[0]["isSuperAdmin"];
 
             //CHECK IF USER EMAIL IS EQUAL TO RETRIEVED EMAIL AND USER PASSWORD IS EQUAL TO RETRIEVED PASSWORD
             if ($email == $retrievedEmail && $adminId == $retrievedAdminId) {
                 //SESSION HERE
                 $_SESSION['admin_id'] = $retrievedId;
                 $_SESSION['admin_name'] = $AdminName;
+                $_SESSION['isSuperAdmin'] = $isSuperAdmin;
+
                 //REDIRECT USER TO VOTE PAGE
                 header("location: ./index.php");
                 exit();

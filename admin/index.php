@@ -4,9 +4,11 @@ session_start();
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
 
-if (isset($_SESSION['admin_id'])) {
+if (isset($_SESSION['admin_id']) && isset($_SESSION['isSuperAdmin']) && isset($_SESSION['admin_name'])) {
   // User is logged in
   $AdminName = $_SESSION['admin_name'];
+  $isSuperAdmin = $_SESSION['isSuperAdmin'];
+  $isSuperAdmin != 1 ? $hideIfNotAdmin = "hideIfNotAdmin" : $hideIfNotAdmin = "";
 } else {
   // User is not logged in, you can redirect them to the login page
   header("Location: login.php");
@@ -117,6 +119,12 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
   <link href="css/styles.css" rel="stylesheet" />
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <style>
+    .hideIfNotAdmin {
+      visibility: hidden;
+    }
+  </style>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -261,7 +269,7 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
             <div class="container">
               <div class="row">
                 <div class="col">
-                  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">New Election</button>
+                  <button class="btn btn-success <?php echo $hideIfNotAdmin ?>" data-bs-toggle="modal" data-bs-target="#exampleModal">New Election</button>
                 </div>
                 <div class="col">
                   <form method="post">
