@@ -376,7 +376,7 @@ if (isset($_POST['newCandidateSubmit'])) {
                                             <td><?php echo $candidatePhone ?></td>
                                             <td><?php echo $positionName ?></td>
                                             <td class="<?php echo $hideIfNotAdmin ?>">
-                                                <a href="./candidate-edit.php?id=<?php echo $candidate['candidate_id'] . '&electionid=' . $_GET['electionid'] ?>" class="btn btn-warning">Edit</a>
+                                                <a href="./candidate-edit.php?id=<?php echo $candidate['candidate_id'] . '&electionid=' . $_GET['electionid'] ?>" class="btn btn-warning <?php echo $hideIfNotAdmin ?>">Edit</a>
                                                 <a href="#" data-href="candidate-delete.php?id=<?php echo $candidate['candidate_id'] . "&electionid=" . $_GET['electionid'] ?> " class="btn btn-danger btn-xs <?php echo $hideIfNotAdmin ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>
                                             </td>
                                         </tr>

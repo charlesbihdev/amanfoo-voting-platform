@@ -87,14 +87,14 @@ if (isset($_POST['submit'])) {
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="voterid" name="voterid" type="name" placeholder="Enter your Voter Id" required />
-                                            <label for="voterid">Voter ID</label>
+                                            <label for="voterid">Voter ID (7-digits)</label>
                                         </div>
                                         <!-- <div class="form-check mb-3">
                                             <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
                                             <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                                         </div> -->
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="password.php">Forgot Voter Id?</a>
+                                            <a class="small" href="password.php">Forgot Voter ID?</a>
                                             <input type="submit" class="btn btn-warning" name="submit" value="Login"></input>
                                         </div>
                                     </form>

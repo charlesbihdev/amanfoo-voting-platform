@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3308
--- Generation Time: Jul 27, 2023 at 08:42 AM
+-- Generation Time: Aug 03, 2023 at 02:02 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -31,15 +31,17 @@ CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
   `email` varchar(200) NOT NULL,
   `admin_id` varchar(100) NOT NULL,
-  `admin_name` varchar(255) NOT NULL
+  `admin_name` varchar(255) NOT NULL,
+  `isSuperAdmin` bit(1) NOT NULL DEFAULT b'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `email`, `admin_id`, `admin_name`) VALUES
-(1, 'admin@admin.com', 'admin', 'Charles');
+INSERT INTO `admin` (`id`, `email`, `admin_id`, `admin_name`, `isSuperAdmin`) VALUES
+(1, 'admin@admin.com', 'admin', 'Charles', b'1'),
+(2, 'admin1@admin.com', 'admin1', 'Owusu', b'0');
 
 -- --------------------------------------------------------
 
@@ -67,15 +69,15 @@ CREATE TABLE `candidates` (
 --
 
 INSERT INTO `candidates` (`candidate_id`, `position_id`, `election_id`, `candidate_name`, `created_at`, `updated_at`, `candidate_phone`, `photo`, `candidate_house`, `candidate_yeargroup`, `candidate_class`, `votes_count`) VALUES
-(1, 11, 8, 'Snr Kwame Boateng Adele Palmas', '2023-07-23 01:32:18', '2023-07-27 06:20:55', '+18177977178', 'image_64c20cc742f7d.jpg', 'Ramseyer', 1986, 'Texas, USA', 3),
-(2, 12, 8, 'Snr Keneth Ohene Mantey', '2023-07-23 01:34:04', '2023-07-24 19:28:03', '+233243354079', 'image_64bd4cea755c1.jpg', 'Ramseyer', 2006, 'Obuasi Municipal, Ashanti', 3),
-(3, 12, 8, 'Eric Kwadwo Tsitsi', '2023-07-23 01:36:30', '2023-07-27 06:31:17', '+233202009046', 'image_64c20f35d763c.jpg', 'Ramseyer', 2005, 'Kumasi, GH', 3),
-(23, 13, 8, 'Snr Yaw G Ayim', '2023-07-23 01:38:07', '2023-07-23 19:30:30', '+1240-906-2033', 'image_64bd5a23db44a.jpg', 'Ramseyer', 1989, 'Bowie, MD', 2),
-(24, 13, 8, 'Snr Timothy Richard', '2023-07-23 01:40:55', '2023-07-27 06:30:19', '+233541454522', 'image_64c20efbc2e2f.jpg', 'Ramseyer', 2017, 'Kumasi, Ghana', 4),
-(25, 14, 8, 'Snr Ebenezer Andoh Korsah', '2023-07-23 01:42:43', '2023-07-27 06:31:03', '+233257900732', 'image_64c20f27c59f3.jpg', 'Ramseyer', 2012, 'Tema, GH', 4),
-(26, 14, 8, 'Snr Clinton Owusu ', '2023-07-23 01:44:22', '2023-07-27 06:30:44', '+233542492196', 'image_64c20f148452b.jpg', 'Ramseyer', 2015, 'Kumasi, Ghana', 2),
-(27, 15, 8, 'Snr. William Acheampong Asenso', '2023-07-23 01:46:01', '2023-07-27 06:20:22', '+233243146592', 'image_64c20ca6d8e0f.jpg', 'Ramseyer', 1990, 'Kumasi', 3),
-(28, 15, 8, 'Snr. Denis Ofori Ababio', '2023-07-23 01:52:16', '2023-07-23 22:05:04', '+233555436800', 'image_64bd5bf9c1aed.jpg', 'Ramseyer', 1998, 'Kumasi, Ghana', 3);
+(1, 11, 8, 'Snr Kwame Boateng Adele Palmas', '2023-07-23 01:32:18', '2023-08-01 15:13:47', '+18177977178', 'image_64c20cc742f7d.jpg', 'Ramseyer', 1986, 'Texas, USA', 5),
+(2, 12, 8, 'Snr Keneth Ohene Mantey', '2023-07-23 01:34:04', '2023-08-01 15:13:47', '+233243354079', 'image_64bd4cea755c1.jpg', 'Ramseyer', 2006, 'Obuasi Municipal, Ashanti, Ghana', 5),
+(3, 12, 8, 'Eric Kwadwo Tsitsi', '2023-07-23 01:36:30', '2023-08-01 15:07:20', '+233202009046', 'image_64c20f35d763c.jpg', 'Ramseyer', 2005, 'Kumasi, Ashanti, Ghana', 3),
+(23, 13, 8, 'Snr Yaw G Ayim', '2023-07-23 01:38:07', '2023-08-01 15:13:47', '+1240-906-2033', 'image_64bd5a23db44a.jpg', 'Ramseyer', 1989, 'Bowie, MD', 3),
+(24, 13, 8, 'Snr Timothy Richard', '2023-07-23 01:40:55', '2023-08-01 15:08:30', '+233541454522', 'image_64c20efbc2e2f.jpg', 'Ramseyer', 2017, 'Kumasi, Ashanti, Ghana', 5),
+(25, 14, 8, 'Snr Ebenezer Andoh Korsah', '2023-07-23 01:42:43', '2023-08-01 15:13:47', '+233257900732', 'image_64c20f27c59f3.jpg', 'Ramseyer', 2012, 'Tema, Greater Accra, Ghana', 6),
+(26, 14, 8, 'Snr Clinton Owusu ', '2023-07-23 01:44:22', '2023-08-01 15:10:01', '+233542492196', 'image_64c20f148452b.jpg', 'Ramseyer', 2015, 'Kumasi, Ashanti, Ghana', 2),
+(27, 15, 8, 'Snr. William Acheampong Asenso', '2023-07-23 01:46:01', '2023-08-01 15:13:47', '+233243146592', 'image_64c20ca6d8e0f.jpg', 'Ramseyer', 1990, 'Kumasi, Ashanti, Ghana', 4),
+(28, 15, 8, 'Snr. Denis Ofori Ababio', '2023-07-23 01:52:16', '2023-08-01 15:11:24', '+233555436800', 'image_64bd5bf9c1aed.jpg', 'Ramseyer', 1998, 'Kumasi, Ashanti, Ghana', 4);
 
 -- --------------------------------------------------------
 
@@ -97,8 +99,8 @@ CREATE TABLE `elections` (
 --
 
 INSERT INTO `elections` (`election_id`, `election_name`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
-(8, 'RHOSA ELECTIONS', '2023-07-23', '2023-07-27', '2023-07-23 01:20:47', '2023-07-23 01:20:47'),
-(9, 'FHOSA ELECTIONS', '2023-07-23', '2023-07-27', '2023-07-23 14:52:35', '2023-07-23 14:52:35');
+(8, 'RAMSEYER ELECTIONS', '2023-07-23', '2023-07-27', '2023-07-23 01:20:47', '2023-08-01 14:56:52'),
+(9, 'FREEMAN ELECTIONS', '2023-07-23', '2023-07-27', '2023-07-23 14:52:35', '2023-08-01 14:57:04');
 
 -- --------------------------------------------------------
 
@@ -155,7 +157,9 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `house`, `voter_id`, `election_
 (22, 'Charles Owusu', 'bihcharles2004@gmail.com', 'Ramseyer', 'f74nsx8', 8, 'image_64bd38e12baf2.jpg', '2023-07-23 14:27:45', '2023-07-23 14:31:13', 'Tarkwa, Ghana'),
 (23, 'Charles Owusu', 'charlesbih@gmail.com', 'Ramseyer', '9ZkQ0v8', 8, 'image_64bd7a3404416.jpg', '2023-07-23 19:06:28', '2023-07-23 19:06:28', 'Sefwi Bekwai, Ghana'),
 (24, 'Charles Owusu Bih', 'owusubih@gmail.com', 'Ramseyer', 'ylmJt48', 8, 'image_64bd7e8a77508.jpg', '2023-07-23 19:24:58', '2023-07-23 19:30:30', 'Sefwi Bekwai, Ghana'),
-(25, 'Nana Osei', 'nanaosei@gmail.com', 'Ramseyer House', 'UC4Nlp8', 8, 'image_64bda173233e0.jpg', '2023-07-23 21:53:55', '2023-07-23 22:05:05', 'Sefwi Bekwai, Ghana');
+(25, 'Nana Osei', 'nanaosei@gmail.com', 'Ramseyer House', 'UC4Nlp8', 8, 'image_64bda173233e0.jpg', '2023-07-23 21:53:55', '2023-07-23 22:05:05', 'Sefwi Bekwai, Ghana'),
+(26, 'Karl Bih', 'karlbih@gmail.com', 'Ramseyer', 'VNygeh8', 8, 'image_64c2168230b6b.jpg', '2023-07-27 07:02:26', '2023-07-27 07:02:26', 'Kumasi, Ghana'),
+(27, 'Sarpong Antwi-Tanoh', 'bigbigstone2016@gmail.com', 'Ramseyer', 'cY4jf88', 8, 'image_64c91d8a5fa06.jpeg', '2023-08-01 14:58:18', '2023-08-01 14:58:18', 'Netherlands');
 
 -- --------------------------------------------------------
 
@@ -197,7 +201,17 @@ INSERT INTO `votes` (`vote_id`, `user_id`, `candidate_id`, `created_at`, `update
 (82, 21, 2, '2023-07-24 19:28:03', '2023-07-24 19:28:03'),
 (83, 21, 24, '2023-07-24 19:28:03', '2023-07-24 19:28:03'),
 (84, 21, 25, '2023-07-24 19:28:03', '2023-07-24 19:28:03'),
-(85, 21, 27, '2023-07-24 19:28:03', '2023-07-24 19:28:03');
+(85, 21, 27, '2023-07-24 19:28:03', '2023-07-24 19:28:03'),
+(86, 26, 1, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
+(87, 26, 2, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
+(88, 26, 24, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
+(89, 26, 25, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
+(90, 26, 28, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
+(91, 27, 1, '2023-08-01 15:13:47', '2023-08-01 15:13:47'),
+(92, 27, 2, '2023-08-01 15:13:47', '2023-08-01 15:13:47'),
+(93, 27, 23, '2023-08-01 15:13:47', '2023-08-01 15:13:47'),
+(94, 27, 25, '2023-08-01 15:13:47', '2023-08-01 15:13:47'),
+(95, 27, 27, '2023-08-01 15:13:47', '2023-08-01 15:13:47');
 
 --
 -- Indexes for dumped tables
@@ -253,7 +267,7 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `candidates`
@@ -277,13 +291,13 @@ ALTER TABLE `positions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- Constraints for dumped tables
