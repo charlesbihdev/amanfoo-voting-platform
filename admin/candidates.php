@@ -65,14 +65,14 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_POST['newCandidateSubmit'])) {
     $selectedPosition = $_POST['position'];
     $newCandidateName = $_POST['candidateName'];
-    $newCandidatePhone = $_POST['candidatePhone'];
+    // $newCandidatePhone = $_POST['candidatePhone'];
     $newCandidateClass = $_POST['candidateClass'];
     $newCandidateHouse = $_POST['candidateHouse'];
     $newCandidateYear = $_POST['candidateYear'];
     $newCandidate = new Admin($pdo, 'candidates');
     $path = $_FILES['photo']['name'];
 
-    if (!empty($selectedPosition) && !empty($newCandidateName) && !empty($newCandidatePhone) && !empty($path)) {
+    if (!empty($selectedPosition) && !empty($newCandidateName) && !empty($path)) {
         // Handle image upload
         $image = $_FILES['photo'];
         $destinationDirectory = './assets/uploads';
@@ -84,7 +84,7 @@ if (isset($_POST['newCandidateSubmit'])) {
             $data = [
                 'candidate_name' => $newCandidateName,
                 'photo' => $uploadedImage,
-                'candidate_phone' => $newCandidatePhone,
+                // 'candidate_phone' => $newCandidatePhone,
                 'candidate_class' => $newCandidateClass,
                 'candidate_house' => $newCandidateHouse,
                 'candidate_yeargroup' => $newCandidateYear,
@@ -278,10 +278,10 @@ if (isset($_POST['newCandidateSubmit'])) {
                                                 <input type="tel" class="form-control" id="candidateYear" name="candidateYear" placeholder="Enter Candidate's Year" required>
                                             </div>
 
-                                            <div class="form-group mb-3">
+                                            <!-- <div class="form-group mb-3">
                                                 <label for="candidatephone">Candidate's Phone</label>
                                                 <input type="tel" class="form-control" id="candidatephone" name="candidatePhone" placeholder="Enter Candidate's Phone Number" required>
-                                            </div>
+                                            </div> -->
 
 
 
@@ -316,7 +316,7 @@ if (isset($_POST['newCandidateSubmit'])) {
                                         <th>Candidate's Name</th>
                                         <th>Year Group</th>
                                         <th>Location</th>
-                                        <th>Candidate's Phone</th>
+                                        <!-- <th>Candidate's Phone</th> -->
                                         <th>Position</th>
                                         <th>Action</th>
                                     </tr>
@@ -350,7 +350,7 @@ if (isset($_POST['newCandidateSubmit'])) {
                                         <th>Candidate's Name</th>
                                         <th>Year Group</th>
                                         <th>Location</th>
-                                        <th>Candidate Phone</th>
+                                        <!-- <th>Candidate Phone</th> -->
                                         <th>Position</th>
                                         <th>Action</th>
                                     </tr>
@@ -364,7 +364,7 @@ if (isset($_POST['newCandidateSubmit'])) {
                                         $candidateYear = $candidate['candidate_yeargroup'];
                                         $candidateClass = $candidate['candidate_class'];
                                         $photourl = $candidate['photo'];
-                                        $candidatePhone = $candidate['candidate_phone'];
+                                        // $candidatePhone = $candidate['candidate_phone'];
                                         $positionName = $candidate['position_name'];
                                     ?>
                                         <tr>
@@ -373,7 +373,7 @@ if (isset($_POST['newCandidateSubmit'])) {
                                             <td><?php echo $candidateName ?></td>
                                             <td><?php echo $candidateYear ?></td>
                                             <td><?php echo $candidateClass ?></td>
-                                            <td><?php echo $candidatePhone ?></td>
+                                            <!-- <td> echo $candidatePhone </td> -->
                                             <td><?php echo $positionName ?></td>
                                             <td class="<?php echo $hideIfNotAdmin ?>">
                                                 <a href="./candidate-edit.php?id=<?php echo $candidate['candidate_id'] . '&electionid=' . $_GET['electionid'] ?>" class="btn btn-warning <?php echo $hideIfNotAdmin ?>">Edit</a>

@@ -33,6 +33,12 @@
             /* Dark color for text */
         }
 
+        .dancing-toy {
+            display: block;
+            margin: 5px auto;
+            max-width: 100%;
+        }
+
         .btn-continue {
             display: block;
             width: 100%;
@@ -64,6 +70,7 @@
     <div class="container">
         <h1 class="thank-you-heading">Thank You for Voting!</h1>
         <p class="thank-you-message">Your vote has been submitted successfully.</p>
+        <img class="dancing-toy" src="./admin/assets/uploads/happy-dance-3.gif" alt="Happys Dancing Toy">
         <a href="#" class="btn-continue">You can exit</a>
     </div>
 

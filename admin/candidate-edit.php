@@ -54,14 +54,14 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_POST['editCandidateSubmit'])) {
     $selectedPosition = $_POST['position'];
     $editedCandidateName = $_POST['candidateName'];
-    $editedCandidatePhone = $_POST['candidatePhone'];
+    // $editedCandidatePhone = $_POST['candidatePhone'];
     $editedCandidateClass = $_POST['candidateClass'];
     $editedCandidateHouse = $_POST['candidateHouse'];
     $editedCandidateYear = $_POST['candidateYear'];
     $path = $_FILES['photo']['name'];
 
 
-    if (!empty($selectedPosition) && !empty($editedCandidateName) && !empty($editedCandidatePhone) && !empty($path)) {
+    if (!empty($selectedPosition) && !empty($editedCandidateName) && !empty($path)) {
         // Handle image upload
         $image = $_FILES['photo'];
         $destinationDirectory = './assets/uploads';
@@ -72,7 +72,7 @@ if (isset($_POST['editCandidateSubmit'])) {
         // Update candidate details in the database
         $sqlUpdateCandidate = "UPDATE candidates SET
             candidate_name = :candidate_name,
-            candidate_phone = :candidate_phone,
+            -- candidate_phone = :candidate_phone,
             photo = :photo,
             candidate_class = :candidate_class,
             candidate_house = :candidate_house,
@@ -81,7 +81,7 @@ if (isset($_POST['editCandidateSubmit'])) {
             WHERE candidate_id = :candidate_id";
         $stmtUpdateCandidate = $pdo->prepare($sqlUpdateCandidate);
         $stmtUpdateCandidate->bindParam(':candidate_name', $editedCandidateName, PDO::PARAM_STR);
-        $stmtUpdateCandidate->bindParam(':candidate_phone', $editedCandidatePhone, PDO::PARAM_STR);
+        // $stmtUpdateCandidate->bindParam(':candidate_phone', $editedCandidatePhone, PDO::PARAM_STR);
         $stmtUpdateCandidate->bindParam(':candidate_class', $editedCandidateClass, PDO::PARAM_STR);
         $stmtUpdateCandidate->bindParam(':candidate_house', $editedCandidateHouse, PDO::PARAM_STR);
         $stmtUpdateCandidate->bindParam(':photo', $uploadedImage, PDO::PARAM_STR);
@@ -243,10 +243,10 @@ if (isset($_POST['editCandidateSubmit'])) {
                                                         <label for="candidateName">Candidate Name</label>
                                                         <input type="text" class="form-control" id="candidateName" name="candidateName" value="<?php echo $candidate['candidate_name']; ?>" required>
                                                     </div>
-                                                    <div class="form-group mb-4">
+                                                    <!-- <div class="form-group mb-4">
                                                         <label for="candidatePhone">Candidate Phone</label>
                                                         <input type="tel" class="form-control" id="candidatePhone" name="candidatePhone" value="<?php echo $candidate['candidate_phone']; ?>" required>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="form-group mb-4">
                                                         <label for="candidateClass">Candidate Location</label>
                                                         <input type="text" class="form-control" id="candidateClass" name="candidateClass" value="<?php echo $candidate['candidate_class']; ?>" required>

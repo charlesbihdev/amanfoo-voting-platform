@@ -15,6 +15,7 @@ if (isset($_POST['submit'])) {
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];
     $house = $_POST['house'];
+    $year = $_POST['year'];
     $location = $_POST['location'];
     $selectedElectionId = $_POST['election'];
 
@@ -36,6 +37,7 @@ if (isset($_POST['submit'])) {
             'name' => $fullname,
             'photo' => $uploadedImage,
             'email' => $email,
+            'year' => $year,
             'voter_id' => $voterId,
             'house' => $house,
             'location' => $location,
@@ -95,16 +97,26 @@ if (isset($_POST['submit'])) {
                                             <input class="form-control" id="fullname" type="text" name="fullname" placeholder="Enter your full name" required />
                                             <label for="fullname">Full Name</label>
                                         </div>
+
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="email" type="email" placeholder="Enter your email" name="email" required />
                                             <label for="email">Email</label>
                                         </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="photo" name="photo" type="file" required />
+                                                    <label for="photo">Upload your Photo (Passport Size)</label>
+                                                </div>
+                                            </div>
 
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="photo" name="photo" type="file" required />
-                                            <label for="photo">Upload your Photo (Passport Size)</label>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="year" name="year" type="number" min="1949" max="<?php echo date("Y"); ?>" step="1" value="<?php echo date("Y"); ?>" required placeholder="Select a year" />
+                                                    <label for="year">Year Group</label>
+                                                </div>
+                                            </div>
                                         </div>
-
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
@@ -115,7 +127,7 @@ if (isset($_POST['submit'])) {
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input class="form-control" id="location" type="text" placeholder="Enter your Location" name="location" required />
-                                                    <label for="location">Location(Residence)</label>
+                                                    <label for="location">Location (Residence)</label>
                                                 </div>
                                             </div>
                                         </div>

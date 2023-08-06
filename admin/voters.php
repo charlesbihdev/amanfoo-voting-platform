@@ -163,6 +163,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
             </nav>
         </div>
         <div id="layoutSidenav_content">
+
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Manage Voters</h1>
@@ -170,7 +171,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                         <li class="breadcrumb-item active"><?php echo $currentElectionName ?></li>
                     </ol>
 
-
+                    <a href="generate_pdf.php?electionid=<?php echo $_GET['electionid'] ?>" class="btn btn-primary mb-4" target="_blank">Export PDF</a>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
@@ -183,6 +184,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                                         <th>S/N</th>
                                         <th>Photo</th>
                                         <th>Name</th>
+                                        <th>Year Group</th>
                                         <th>Email</th>
                                         <th>Voter ID</th>
                                         <th>Voted</th>
@@ -211,6 +213,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                                         <th>S/N</th>
                                         <th>Photo</th>
                                         <th>Name</th>
+                                        <th>Year Group</th>
                                         <th>Email</th>
                                         <th>Voter ID</th>
                                         <th>Voted</th>
@@ -223,6 +226,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo $index + 1; ?></td>
                                             <td><img style="width: 100px;" src="./assets/uploads/<?php echo $voter['photo']; ?>" alt="Voter Photo"></td>
                                             <td><?php echo $voter['name']; ?></td>
+                                            <td><?php echo $voter['year']; ?></td>
                                             <td><?php echo $voter['email']; ?></td>
                                             <td><?php echo $voter['voter_id']; ?></td>
                                             <td><?php echo $voter['vote_count'] > 0 ? 'Yes' : 'No'; ?></td>
