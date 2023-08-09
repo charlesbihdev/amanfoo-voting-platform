@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
                                                     <input class="form-control" id="year" name="year" type="number" min="1949" max="<?php echo date("Y"); ?>" step="1" value="<?php echo date("Y"); ?>" required placeholder="Select a year" />
-                                                    <label for="year">Year Group</label>
+                                                    <label for="year">Year Group (Year Completed)</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input class="form-control" id="location" type="text" placeholder="Enter your Location" name="location" required />
-                                                    <label for="location">Location (Residence)</label>
+                                                    <label for="location">Location(City or Town/State or Region/Country)</label>
                                                 </div>
                                             </div>
                                         </div>

@@ -67,6 +67,10 @@
 </head>
 
 <body>
+    <audio autoplay>
+        <source src="./admin/assets/audio/prempeh_anthem.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+    </audio>
     <div class="container">
         <h1 class="thank-you-heading">Thank You for Voting!</h1>
         <p class="thank-you-message">Your vote has been submitted successfully.</p>
