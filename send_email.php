@@ -26,11 +26,11 @@ $message = '<!DOCTYPE html>
 <table width="100%" border="0" cellspacing="0" cellpadding="20">
   <tr>
     <td style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-      <p>Hello <strong style="color: green;">' . $name . '</strong>,</p>
+      <p>Hello <strong style="color: green;">' . $name . '!</strong>,</p>
       <p>These are your login details:</p>
       <ul>
         <li><strong>Email:</strong> ' . $email . '</li>
-        <li><strong>Voter Id:</strong> ' . $voterId . '</li>
+        <li><strong>Voter ID (7-Digits):</strong> ' . $voterId . '</li>
       </ul>
     </td>
   </tr>
