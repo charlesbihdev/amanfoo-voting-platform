@@ -9,6 +9,9 @@ $alert = "";
 $electionsFetch = new Admin($pdo, 'elections');
 $elections = $electionsFetch->readAll("election_id");
 
+$housesFetch = new Admin($pdo, 'elections');
+$houses = $housesFetch->readAll("election_id");
+
 // Step 2: Check if the form is submitted
 if (isset($_POST['submit'])) {
     // Step 3: Get form data
@@ -120,7 +123,12 @@ if (isset($_POST['submit'])) {
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="house" type="text" name="house" placeholder="Choose your House" required />
+                                                    <select class="form-select" id="house" name="house" required>
+                                                        <option value="" selected>Select House</option>
+                                                        <?php foreach ($houses as $house) : ?>
+                                                            <option value="<?php echo $house['house']; ?>"><?php echo $house['house']; ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
                                                     <label for="house">House</label>
                                                 </div>
                                             </div>

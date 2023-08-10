@@ -17,7 +17,9 @@ $sqlVoters = "SELECT u.*, COUNT(v.vote_id) AS vote_count
               FROM users u
               LEFT JOIN votes v ON u.user_id = v.user_id
               WHERE u.election_id = :election_id
-              GROUP BY u.user_id";
+              GROUP BY u.user_id
+              ORDER BY u.year";
+
 
 $stmtVoters = $pdo->prepare($sqlVoters);
 $stmtVoters->bindValue(':election_id', $electionId, PDO::PARAM_INT);
@@ -70,6 +72,7 @@ $html .= '<table>
                     <th>Photo</th>
                     <th>Name</th>
                     <th>Year Group</th>
+                    <th>House</th>
                 </tr>
             </thead>
             <tbody>';
@@ -80,6 +83,7 @@ $sn = 1;
 //                 <td>' . $sn++ . '</td>
 //                 <td><img src="./assets/uploads/' . $voter['name'] . '"></td>
 //                 <td>' . $voter['name'] . '</td>
+//                 <td>' . $voter['house'] . '</td>
 //                 <td>' . $voter['year'] . '</td>
 //             </tr>';
 // }
@@ -91,6 +95,7 @@ foreach ($voters as $voter) {
                <td><img src="' . $imagePath . '"></td>
                <td>' . $voter['name'] . '</td>
                <td>' . $voter['year'] . '</td>
+               <td>' . $voter['house'] . '</td>
            </tr>';
 }
 
