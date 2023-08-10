@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
     $positionId = null; // or set to the appropriate value
 
     if (!empty($fullname) && !empty($email) && !empty($house) && !empty($location) && !empty($selectedElectionId) && $uploadedImage) {
-        // Step 5: Insert the data into the Candidates table, including the file name
+        // Insert the data into the Candidates table, including the file name
         $newUser = new Admin($pdo, 'users');
         $data = [
             'name' => $fullname,
@@ -43,16 +43,15 @@ if (isset($_POST['submit'])) {
             'location' => $location,
             'election_id' => $selectedElectionId
         ];
-        $newUser->create($data);
-        // $newUserRead->read("email", $email);
-        // $user
-        // print_r($newUserRead);
+        if ($newUser->create($data)) {
+            // Display success message or redirect to a view voter ID page
 
-        // Display success message or redirect to a success page
-        $alert = "showAlert('success', 'Candidate created successfully!')";
-        header("Location: ./viewvoterid.php?voterid={$voterId}");
+            $alert = "showAlert('success', 'Candidate created successfully!')";
+            header("Location: ./viewvoterid.php?voterid={$voterId}&email={$email}&name={$fullname}");
+            exit;
+        }
     } else {
-        // Display error message or redirect back to the form page with an error message
+        // Display error message
         $alert = "showAlert('error', 'Error: Please fill all required fields and upload a valid photo.')";
     }
 }
@@ -102,6 +101,7 @@ if (isset($_POST['submit'])) {
                                             <input class="form-control" id="email" type="email" placeholder="Enter your email" name="email" required />
                                             <label for="email">Email</label>
                                         </div>
+
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
@@ -126,34 +126,22 @@ if (isset($_POST['submit'])) {
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input class="form-control" id="location" type="text" placeholder="Enter your Location" name="location" required />
-                                                    <label for="location">Location(City or Town/State or Region/Country)</label>
+                                                    <select class="form-select" id="election" name="election" required>
+                                                        <option value="" selected>Select Election</option>
+                                                        <?php foreach ($elections as $election) : ?>
+                                                            <option value="<?php echo $election['election_id']; ?>"><?php echo $election['election_name']; ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label for="election">Election</label>
                                                 </div>
                                             </div>
                                         </div>
 
-
-                                        <!-- <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                            <label for="inputEmail">Email address</label>
-                                        </div> -->
-                                        <div class="row mb-3">
-                                            <div class="form-floating mb-3">
-                                                <select class="form-select" id="election" name="election" required>
-                                                    <option value="" selected>Select Election</option>
-                                                    <?php foreach ($elections as $election) : ?>
-                                                        <option value="<?php echo $election['election_id']; ?>"><?php echo $election['election_name']; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <label for="election">Election</label>
-                                            </div>
-                                            <!-- <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPasswordConfirm" type="text" placeholder="auto generated" value="x3mlRAM" readonly />
-                                                    <label for="inputPasswordConfirm">Voter ID</label>
-                                                </div>
-                                            </div> -->
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="location" type="text" placeholder="Enter your Location" name="location" required />
+                                            <label for="location"> Location(City or Town/State or Region/Country)</label>
                                         </div>
+
                                         <div class="mt-4 mb-0">
                                             <div class="d-grid"><input type="submit" class="btn btn-warning btn-block" value="Create Account" name="submit"></input></div>
                                         </div>
@@ -174,9 +162,7 @@ if (isset($_POST['submit'])) {
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Amanfoo Voting Platform 2023</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="https://linktr.ee/charlesbihdev"><small style="margin: 0; text-align: left">Developed By: Snr Charles Bih</small></a>
                         </div>
                     </div>
                 </div>

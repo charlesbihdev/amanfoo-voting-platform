@@ -1,6 +1,9 @@
 <?php
-if (!isset($_GET['electionid'])) {
-   echo "You visited an unauthorized page";
+session_start();
+
+if (!isset($_SESSION['admin_id']) || !isset($_SESSION['isSuperAdmin']) || !isset($_GET['electionid']) || !isset($_SESSION['admin_name'])) {
+   // User is logged in
+   echo "you visited an unauthorized page";
    exit;
 }
 

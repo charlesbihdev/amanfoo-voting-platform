@@ -4,6 +4,8 @@ require_once "./admin/auxilliaries.php";
 
 if (isset($_GET['voterid'])) {
     $voterId = $_GET['voterid'];
+    $email = $_GET['email'];
+    $name = $_GET['name'];
 } else {
     header("location: ./register.php");
 }
@@ -93,15 +95,16 @@ if (isset($_GET['voterid'])) {
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Amanfoo Voting Platform 2023</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="https://linktr.ee/charlesbihdev"><small style="margin: 0; text-align: left">Developed By: Snr Charles Bih</small></a>
+
                         </div>
                     </div>
                 </div>
             </footer>
         </div>
     </div>
+    <?php require_once "./send_email.php"; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="./admin/js/scripts.js"></script>
     <?php require_once "./admin/inc/footer.php"; ?>

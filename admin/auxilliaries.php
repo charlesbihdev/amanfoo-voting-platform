@@ -43,6 +43,7 @@ class Admin
             $errorInfo = $stmt->errorInfo();
             echo "Error: " . $errorInfo[2];
         }
+        return true;
     }
     //THE READ FUNCTION WITH A WHERE CLAUSE
     public function read($searchField, $searchValue)
