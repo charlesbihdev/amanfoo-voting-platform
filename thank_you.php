@@ -67,17 +67,22 @@
 </head>
 
 <body>
-    <audio autoplay>
-        <source src="./admin/assets/audio/prempeh_anthem.mp3" type="audio/mp3" />
-        Your browser does not support the audio element.
-    </audio>
-    <div class="container">
-        <h1 class="thank-you-heading">Thank You for Voting!</h1>
-        <p class="thank-you-message">Your vote has been submitted successfully.</p>
-        <img class="dancing-toy" src="./admin/assets/uploads/happy-dance-3.gif" alt="Happys Dancing Toy">
-        <a href="#" class="btn-continue">You can exit</a>
+    <div style="height: 90vh">
+        <audio autoplay>
+            <source src="./admin/assets/audio/prempeh_anthem.mp3" type="audio/mp3" />
+            Your browser does not support the audio element.
+        </audio>
+        <div class="container">
+            <h1 class="thank-you-heading">Thank You for Voting!</h1>
+            <p class="thank-you-message">Your vote has been submitted successfully.</p>
+            <img class="dancing-toy" src="./admin/assets/uploads/happy-dance-3.gif" alt="Happys Dancing Toy">
+            <a href="#" class="btn-continue">You can exit</a>
+        </div>
     </div>
 
+    <a href="https://linktr.ee/charlesbihdev" target="_blank">
+        <p style="margin: 0; text-align: center">Developed By: Snr Charles Bih (2021)</p>
+    </a>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>

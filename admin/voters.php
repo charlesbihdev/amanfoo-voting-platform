@@ -228,7 +228,9 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo $voter['name']; ?></td>
                                             <td><?php echo $voter['year']; ?></td>
                                             <td><?php echo $voter['email']; ?></td>
-                                            <td><?php echo $voter['voter_id']; ?></td>
+                                            <td>
+                                                <p class="<?php echo $hideIfNotAdmin ?>"><?php echo $voter['voter_id']; ?></p>
+                                            </td>
                                             <td><?php echo $voter['vote_count'] > 0 ? 'Yes' : 'No'; ?></td>
                                             <td>
                                                 <a href="#" data-href="voters-delete.php?id=<?php echo $voter['user_id'] . "&electionid=" . $_GET['electionid'] ?>" class="btn btn-danger btn-xs <?php echo $hideIfNotAdmin ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>

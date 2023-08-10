@@ -11725,4 +11725,5 @@ body {
 
 .hideIfNotAdmin {
   display: none;
+  opacity: 0;
 }
