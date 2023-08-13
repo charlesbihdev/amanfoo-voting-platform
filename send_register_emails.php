@@ -1,7 +1,7 @@
 <?php
 if (!isset($email) || !isset($name) || !isset($voterId)) {
-    echo "You visited an unauthorised Page";
-    exit;
+  echo "You visited an unauthorised Page";
+  exit;
 }
 //$name
 // $email
@@ -11,14 +11,14 @@ $subject = "Amanfoo Voting Login Details";
 $message = '<!DOCTYPE html>
 <html>
 <head>
-<title>Amanfoo Voting Login Details</title>
+<title>Amanfoo Voting Registration</title>
 </head>
 <body style="background-color: white; font-family: Arial, sans-serif; color: #333; font-size: larger">
 
 <table width="100%" border="0" cellspacing="0" cellpadding="20">
   <tr>
     <td align="center" style="background-color: green; padding: 20px; color: white;">
-      <h1 style="margin: 0;">Amanfoo Voting Platform</h1>
+      <h1 style="margin: 0;">Amanfoo Voting Registration</h1>
     </td>
   </tr>
 </table>
@@ -26,7 +26,7 @@ $message = '<!DOCTYPE html>
 <table width="100%" border="0" cellspacing="0" cellpadding="20">
   <tr>
     <td style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-      <p>Hello <strong style="color: green;">' . $name . '!</strong>,</p>
+      <p>Hello! <strong style="color: green;">' . $name . '</strong>,</p>
       <p>These are your login details:</p>
       <ul>
         <li><strong>Email:</strong> ' . $email . '</li>
@@ -39,7 +39,7 @@ $message = '<!DOCTYPE html>
 <table width="100%" border="0" cellspacing="0" cellpadding="20">
   <tr>
     <td align="center" style="background-color: yellow; padding: 20px; color: #333;">
-      <p style="margin: 0;">Thank you for using Amanfoo Voting Platform!</p>
+      <p style="margin: 0;">Keep them very safe. Thank you.</p>
       <a href="https://linktr.ee/charlesbihdev"><small style="margin: 0; text-align: left">Developed By: Snr Charles Bih</small></a>
     </td>
   </tr>
@@ -76,7 +76,7 @@ $mail->addAddress($email, $name);
 $mail->Subject = $subject;
 $mail->Body = $message;
 if ($mail->send()) {
-    echo "sent succesfully";
+  echo "sent succesfully";
 } else {
-    echo "unable to send";
+  echo "unable to send";
 }

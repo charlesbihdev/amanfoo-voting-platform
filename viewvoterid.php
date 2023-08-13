@@ -74,7 +74,7 @@ if (isset($_GET['voterid'])) {
                                         </div>
                                         <div class="mt-4 mb-0">
                                             <div class="d-grid">
-                                                <a href="#" data-href="./login.php" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#confirm-delete">Proceed To Login</a>
+                                                <a href="#" data-href="./" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#confirm-delete">Registration Succesfull. You can exit;</a>
 
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@ if (isset($_GET['voterid'])) {
             </footer>
         </div>
     </div>
-    <?php require_once "./send_email.php"; ?>
+    <?php require_once "./send_register_emails.php"; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="./admin/js/scripts.js"></script>

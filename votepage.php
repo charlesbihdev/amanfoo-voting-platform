@@ -26,6 +26,9 @@ $stmtVoters = $pdo->prepare($sqlVoters);
 $stmtVoters->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 $stmtVoters->execute();
 $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
+$userfullname = $voters[0]['name'];
+$useremail = $voters[0]['email'];
+
 
 if ($voters[0]['vote_count'] > 0) {
     // User is already voted, redirect them to the already voted page
@@ -97,7 +100,7 @@ if (isset($_POST["submit"])) {
     }
 
     // Redirect the user to a "Thank You" page or any other page after voting is successful
-    header("Location: thank_you.php");
+    header("Location: thank_you.php?name={$userfullname}&email={$useremail}");
     exit();
 }
 ?>

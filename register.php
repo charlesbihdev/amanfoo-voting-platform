@@ -4,13 +4,13 @@ require_once "./admin/auxilliaries.php";
 
 $alert = "";
 
-
-
 $electionsFetch = new Admin($pdo, 'elections');
 $elections = $electionsFetch->readAll("election_id");
 
 $housesFetch = new Admin($pdo, 'elections');
 $houses = $housesFetch->readAll("election_id");
+
+
 
 // Step 2: Check if the form is submitted
 if (isset($_POST['submit'])) {
@@ -36,22 +36,33 @@ if (isset($_POST['submit'])) {
     if (!empty($fullname) && !empty($email) && !empty($house) && !empty($location) && !empty($selectedElectionId) && $uploadedImage) {
         // Insert the data into the Candidates table, including the file name
         $newUser = new Admin($pdo, 'users');
-        $data = [
-            'name' => $fullname,
-            'photo' => $uploadedImage,
-            'email' => $email,
-            'year' => $year,
-            'voter_id' => $voterId,
-            'house' => $house,
-            'location' => $location,
-            'election_id' => $selectedElectionId
-        ];
-        if ($newUser->create($data)) {
-            // Display success message or redirect to a view voter ID page
+        $user = $newUser->read("email", $email);
+        $numRows = count($user); // Count the number of rows returned by the query
 
-            $alert = "showAlert('success', 'Candidate created successfully!')";
-            header("Location: ./viewvoterid.php?voterid={$voterId}&email={$email}&name={$fullname}");
-            exit;
+        if ($numRows == 0) {
+            $data = [
+                'name' => $fullname,
+                'photo' => $uploadedImage,
+                'email' => $email,
+                'year' => $year,
+                'voter_id' => $voterId,
+                'house' => $house,
+                'location' => $location,
+                'election_id' => $selectedElectionId
+            ];
+            if ($newUser->create($data)) {
+                // Display success message or redirect to a view voter ID page
+
+                $alert = "showAlert('success', 'Candidate created successfully!')";
+                header("Location: ./viewvoterid.php?voterid={$voterId}&email={$email}&name={$fullname}");
+                exit;
+            } else {
+                // Display error message
+                $alert = "showAlert('error', 'Error: Unable to create account.')";
+            }
+        } else {
+            // Display error message
+            $alert = "showAlert('error', 'Error: Email already exist.')";
         }
     } else {
         // Display error message
