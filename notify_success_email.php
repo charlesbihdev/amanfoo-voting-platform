@@ -117,8 +117,7 @@ $mail->Host = "smtp.gmail.com";
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
 
-$mail->Username = "bihcharles2004@gmail.com";
-$mail->Password = "nbdevquibdacgftl";
+// email and password here
 
 $mail->setFrom("no_reply@amanfoovoting.com", "AmanfooVoting");
 
