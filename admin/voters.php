@@ -8,7 +8,6 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['isSuperAdmin']) && isset($_
     // User is logged in
     $AdminName = $_SESSION['admin_name'];
     $isSuperAdmin = $_SESSION['isSuperAdmin'];
-    $isSuperAdmin != 1 ? $hideIfNotAdmin = "hideIfNotAdmin" : $hideIfNotAdmin = "";
 } else {
     // User is not logged in, you can redirect them to the login page
     header("Location: login.php");
@@ -61,11 +60,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <style>
-        .hideIfNotAdmin {
-            visibility: hidden;
-        }
-    </style>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -170,8 +165,11 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><?php echo $currentElectionName ?></li>
                     </ol>
-
-                    <a href="generate_pdf.php?electionid=<?php echo $_GET['electionid'] ?>" class="btn btn-primary mb-4" target="_blank">Export PDF</a>
+                    <?php
+                    if ($isSuperAdmin) {
+                        $generatelink = '<a href="generate_pdf.php?electionid=' . $_GET['electionid'] . ' " class="btn btn-primary mb-4" target="_blank">Export PDF</a>';
+                        echo $generatelink;
+                    } ?>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
@@ -229,11 +227,25 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo $voter['year']; ?></td>
                                             <td><?php echo $voter['email']; ?></td>
                                             <td>
-                                                <p class="<?php echo $hideIfNotAdmin ?>"><?php echo $voter['voter_id']; ?></p>
+                                                <?php
+                                                if ($isSuperAdmin) {
+                                                    echo $voter['voter_id'];
+                                                } ?>
+
+
                                             </td>
-                                            <td><?php echo $voter['vote_count'] > 0 ? 'Yes' : 'No'; ?></td>
                                             <td>
-                                                <a href="#" data-href="voters-delete.php?id=<?php echo $voter['user_id'] . "&electionid=" . $_GET['electionid'] ?>" class="btn btn-danger btn-xs <?php echo $hideIfNotAdmin ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>
+                                                <?php
+                                                if ($isSuperAdmin) {
+                                                    echo $voter['vote_count'] > 0 ? 'Yes' : 'No';
+                                                } ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                if ($isSuperAdmin) {
+                                                    $deletelink = '<a href="#" data-href="voters-delete.php?id=' . $voter['user_id'] . '&electionid=' . $_GET['electionid'] . '" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete">Delete</a>';
+                                                    echo $deletelink;
+                                                } ?>
 
                                             </td>
                                         </tr>
@@ -250,9 +262,8 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Amanfoo Voting 2023</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="https://linktr.ee/charlesbihdev"><small style="margin: 0; text-align: left">Developed By: Snr Charles Bih</small></a>
+
                         </div>
                     </div>
                 </div>

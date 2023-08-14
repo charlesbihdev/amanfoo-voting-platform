@@ -11723,7 +11723,4 @@ body {
   color: white;
 }
 
-.hideIfNotAdmin {
-  display: none;
-  opacity: 0;
-}
+

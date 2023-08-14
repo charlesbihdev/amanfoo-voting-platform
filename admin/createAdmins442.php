@@ -28,8 +28,6 @@ $mail->Port = 587;
 $mail->setFrom("no_reply@amanfoovoting.com", "AmanfooVoting");
 
 
-
-
 if (isset($_POST['submit'])) {
   $subject = $_POST['subject'];
   $name = $_POST['name'];

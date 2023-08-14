@@ -8,7 +8,6 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['isSuperAdmin']) && isset($_
   // User is logged in
   $AdminName = $_SESSION['admin_name'];
   $isSuperAdmin = $_SESSION['isSuperAdmin'];
-  $isSuperAdmin != 1 ? $hideIfNotAdmin = "hideIfNotAdmin" : $hideIfNotAdmin = "";
 } else {
   // User is not logged in, you can redirect them to the login page
   header("Location: login.php");
@@ -119,11 +118,7 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
   <link href="css/styles.css" rel="stylesheet" />
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-  <style>
-    .hideIfNotAdmin {
-      visibility: hidden;
-    }
-  </style>
+
 
 </head>
 
@@ -225,6 +220,8 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
         <div class="container-fluid px-4">
           <h1 class="mt-2"><?php echo $title ?></h1>
           <ol class="breadcrumb mb-4">
+
+
             <!-- Modal -->
             <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -266,10 +263,17 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
                 </div>
               </div>
             </div>
+
+            <!-- end modal -->
+
             <div class="container">
               <div class="row">
                 <div class="col">
-                  <button class="btn btn-success <?php echo $hideIfNotAdmin ?>" data-bs-toggle="modal" data-bs-target="#exampleModal">New Election</button>
+                  <?php
+                  if ($isSuperAdmin) {
+                    echo '<button class="btn btn-success " data-bs-toggle="modal" data-bs-target="#exampleModal">New Election</button>';
+                  }
+                  ?>
                 </div>
                 <div class="col">
                   <form method="post">
@@ -288,7 +292,6 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
 
               </div>
             </div>
-            <!-- Modal -->
 
 
           </ol>
@@ -447,9 +450,8 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
           <div class="d-flex align-items-center justify-content-between small">
             <div class="text-muted">Copyright &copy; Amanfoo Voting Platform 2023</div>
             <div>
-              <a href="#">Privacy Policy</a>
-              &middot;
-              <a href="#">Terms &amp; Conditions</a>
+              <a href="https://linktr.ee/charlesbihdev"><small style="margin: 0; text-align: left">Developed By: Snr Charles Bih</small></a>
+
             </div>
           </div>
         </div>

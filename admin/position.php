@@ -8,7 +8,6 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['isSuperAdmin']) && isset($_
   // User is logged in
   $AdminName = $_SESSION['admin_name'];
   $isSuperAdmin = $_SESSION['isSuperAdmin'];
-  $isSuperAdmin != 1 ? $hideIfNotAdmin = "hideIfNotAdmin" : $hideIfNotAdmin = "";
 } else {
   // User is not logged in, you can redirect them to the login page
   header("Location: login.php");
@@ -69,11 +68,7 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-  <style>
-    .hideIfNotAdmin {
-      visibility: hidden;
-    }
-  </style>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -207,7 +202,11 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
               </div>
             </div>
           </div>
-          <button class="btn btn-warning mb-4 <?php echo $hideIfNotAdmin ?>" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Position</button>
+          <?php
+          if ($isSuperAdmin) {
+            echo '<button class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Position</button>';
+          }
+          ?>
           <!-- Modal -->
 
           <div class="card mb-4">
@@ -222,7 +221,7 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
                     <th>S/N</th>
                     <th>Description</th>
                     <th>Max Vote</th>
-                    <th class="<?php echo $hideIfNotAdmin ?>">Action</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -265,8 +264,11 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
                       <td><?php echo $positionName; ?></td>
                       <td><?php echo $maxVote; ?></td>
                       <td>
-                        <!-- <button type="button" class="btn btn-danger">Delete</button> -->
-                        <a href="#" data-href="position-delete.php?id=<?php echo $positionId . "&electionid=" . $electionId ?>" class="btn btn-danger btn-xs <?php echo $hideIfNotAdmin ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>
+                        <?php
+                        if ($isSuperAdmin) {
+                          $deletelink = '<a href="#" data-href="position-delete.php?id=' . $positionId . '&electionid=' . $electionId . '" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete">Delete</a>';
+                          echo $deletelink;
+                        } ?>
 
                       </td>
                     </tr>
@@ -285,9 +287,8 @@ $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
           <div class="d-flex align-items-center justify-content-between small">
             <div class="text-muted">Copyright &copy; Amanfoo Voting 2023</div>
             <div>
-              <a href="#">Privacy Policy</a>
-              &middot;
-              <a href="#">Terms &amp; Conditions</a>
+              <a href="https://linktr.ee/charlesbihdev"><small style="margin: 0; text-align: left">Developed By: Snr Charles Bih</small></a>
+
             </div>
           </div>
         </div>

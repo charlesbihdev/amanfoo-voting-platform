@@ -8,7 +8,6 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['isSuperAdmin']) && isset($_
     // User is logged in
     $AdminName = $_SESSION['admin_name'];
     $isSuperAdmin = $_SESSION['isSuperAdmin'];
-    $isSuperAdmin != 1 ? $hideIfNotAdmin = "hideIfNotAdmin" : $hideIfNotAdmin = "";
 } else {
     // User is not logged in, you can redirect them to the login page
     header("Location: login.php");
@@ -121,11 +120,7 @@ if (isset($_POST['newCandidateSubmit'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <style>
-        /* .hideIfNotAdmin {
-            visibility: hidden !important;
-        } */
-    </style>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -299,7 +294,10 @@ if (isset($_POST['newCandidateSubmit'])) {
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-warning mb-4 <?php echo $hideIfNotAdmin ?>" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Candidate</button>
+                    <?php
+                    if ($isSuperAdmin) {
+                        echo '<button class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Candidate</button>';
+                    } ?>
                     <!-- end of Create Modal -->
 
                     <div class="card mb-4">
@@ -375,9 +373,17 @@ if (isset($_POST['newCandidateSubmit'])) {
                                             <td><?php echo $candidateClass ?></td>
                                             <!-- <td> echo $candidatePhone </td> -->
                                             <td><?php echo $positionName ?></td>
-                                            <td class="<?php echo $hideIfNotAdmin ?>">
-                                                <a href="./candidate-edit.php?id=<?php echo $candidate['candidate_id'] . '&electionid=' . $_GET['electionid'] ?>" class="btn btn-warning <?php echo $hideIfNotAdmin ?>">Edit</a>
-                                                <a href="#" data-href="candidate-delete.php?id=<?php echo $candidate['candidate_id'] . "&electionid=" . $_GET['electionid'] ?> " class="btn btn-danger btn-xs <?php echo $hideIfNotAdmin ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>
+                                            <td>
+
+                                                <?php
+                                                $editlink = '<a href="candidate-edit.php?id=' . $candidate['candidate_id'] . '&electionid=' . $_GET['electionid'] . '" class="btn btn-warning">Edit</a>';
+                                                if ($isSuperAdmin) {
+                                                    $editlink = '<a href="candidate-edit.php?id=' . $candidate['candidate_id'] . '&electionid=' . $_GET['electionid'] . '" class="btn btn-warning">Edit</a>';
+                                                    $deletelink = '<a href="#" data-href="candidate-delete.php?id=' . $candidate['candidate_id'] . "&electionid=" . $_GET['electionid'] . '" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete">Delete</a>';
+                                                    echo $editlink;
+                                                    echo $deletelink;
+                                                } ?>
+
                                             </td>
                                         </tr>
                                     <?php
@@ -396,9 +402,8 @@ if (isset($_POST['newCandidateSubmit'])) {
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Amanfoo Voting 2023</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="https://linktr.ee/charlesbihdev"><small style="margin: 0; text-align: left">Developed By: Snr Charles Bih</small></a>
+
                         </div>
                     </div>
                 </div>
