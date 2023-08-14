@@ -117,7 +117,7 @@ $mail->Host = "smtp.gmail.com";
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
 
-// email and password here
+
 
 $mail->setFrom("no_reply@amanfoovoting.com", "AmanfooVoting");
 
@@ -126,7 +126,9 @@ $mail->addAddress($email, $name);
 $mail->Subject = $subject;
 $mail->Body = $message;
 if ($mail->send()) {
+  $alert = "showAlert('success', 'Your details are sent to your inbox!')";
+
   // echo "sent succesfully";
 } else {
-  echo "unable to send";
+  $alert = "showAlert('error', 'Error: Could'nt send your details to your inbox.')";
 }

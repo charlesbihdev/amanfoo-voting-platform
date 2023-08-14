@@ -88,7 +88,7 @@ $stmtPositions->bindParam(':election_id', $electionId, PDO::PARAM_INT);
 $stmtPositions->execute();
 $positions = $stmtPositions->fetchAll(PDO::FETCH_ASSOC);
 
-// Step 2: Check if a specific position is selected by the user
+//  Check if a specific position is selected by the user
 $positionName = "";
 if (isset($_POST['position_id'])) {
   $selectedPositionId = $_POST['position_id'];
@@ -97,7 +97,7 @@ if (isset($_POST['position_id'])) {
   $positionName = $nameGetResult[0]['position_name'];
 }
 
-// Step 3: Query to get candidate names and their votes for the selected position
+//Query to get candidate names and their votes for the selected position
 $sqlCandidatesVotes = "SELECT candidate_name, votes_count FROM candidates WHERE election_id = :election_id AND position_id = :position_id";
 $stmtCandidatesVotes = $pdo->prepare($sqlCandidatesVotes);
 $stmtCandidatesVotes->bindParam(':election_id', $electionId, PDO::PARAM_INT);

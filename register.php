@@ -12,9 +12,9 @@ $houses = $housesFetch->readAll("election_id");
 
 
 
-// Step 2: Check if the form is submitted
+// Check if the form is submitted
 if (isset($_POST['submit'])) {
-    // Step 3: Get form data
+    // Get form data
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];
     $house = $_POST['house'];
@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
     $location = $_POST['location'];
     $selectedElectionId = $_POST['election'];
 
-    // Step 4: Validate and handle image upload
+    // Validate and handle image upload
     $photo = $_FILES['photo'];
     $destinationDirectory = './admin/assets/uploads';
     $uploadedImage = uploadImage($photo, $destinationDirectory);
@@ -166,9 +166,7 @@ if (isset($_POST['submit'])) {
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="login.php">Have an account? Go to login</a></div>
-                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -99,9 +99,7 @@ if (isset($_POST['submit'])) {
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="register.php">Need a voter account? Sign up!</a></div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
