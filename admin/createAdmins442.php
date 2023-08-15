@@ -1,5 +1,6 @@
 <?php
 session_start();
+//hidden line is here;
 
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
@@ -7,7 +8,7 @@ require_once "./auxilliaries.php";
 require "./vendor/autoload.php";
 $alert = "";
 
-
+use FontLib\Table\Type\head;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
@@ -31,7 +32,7 @@ $mail->setFrom("no_reply@amanfoovoting.com", "AmanfooVoting");
 if (isset($_POST['submit'])) {
   $subject = $_POST['subject'];
   $name = $_POST['name'];
-  $admiId = $_POST['adminid'];
+  $adminId = $_POST['adminid'];
   $email = $_POST['email'];
 
   $mail->Subject = $subject;
@@ -43,12 +44,12 @@ if (isset($_POST['submit'])) {
     $newAdmin = new Admin($pdo, 'admin');
     $admin = $newAdmin->read("email", $email);
     $numRows = count($admin); // Count the number of rows returned by the query
-
+    $hashedAdminId = password_hash($adminId, PASSWORD_DEFAULT);
     if ($numRows == 0) {
       $data = [
         'admin_name' => $name,
         'email' => $email,
-        'admin_id' => $admiId
+        'admin_id' => $hashedAdminId
 
       ];
       $message = '<!DOCTYPE html>
@@ -73,7 +74,7 @@ if (isset($_POST['submit'])) {
           <p>These are your admin login details:</p>
           <ul>
             <li><strong>Email:</strong> ' . $email . '</li>
-            <li><strong>Admin ID (7-Digits):</strong> ' . $admiId . '</li>
+            <li><strong>Admin ID (7-Digits):</strong> ' . $adminId . '</li>
           </ul>
         </td>
       </tr>
@@ -139,6 +140,7 @@ if (isset($_POST['submit'])) {
   ?>
   <main>
     <div class="container">
+
       <div class="row justify-content-center">
         <div class="col-lg-5">
           <div class="card shadow-lg border-0 rounded-lg mt-5">
@@ -169,6 +171,10 @@ if (isset($_POST['submit'])) {
 
                 <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                   <input type="submit" class="btn btn-warning" name="submit" value="Create User"></input>
+                  <a href="./index.php">
+                    <div class="btn btn-danger">Dashboard</div>
+                  </a>
+
                 </div>
               </form>
             </div>

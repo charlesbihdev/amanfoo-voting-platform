@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
             $isSuperAdmin = $results[0]["isSuperAdmin"];
 
             //CHECK IF USER EMAIL IS EQUAL TO RETRIEVED EMAIL AND USER PASSWORD IS EQUAL TO RETRIEVED PASSWORD
-            if ($email == $retrievedEmail && $adminId == $retrievedAdminId) {
+            if ($email == $retrievedEmail && password_verify($adminId, $retrievedAdminId)) {
                 //SESSION HERE
                 $_SESSION['admin_id'] = $retrievedId;
                 $_SESSION['admin_name'] = $AdminName;
