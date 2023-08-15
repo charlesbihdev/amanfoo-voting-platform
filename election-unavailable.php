@@ -7,10 +7,10 @@ $email
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You</title>
-    <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
+    <title>Election Unavailable</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
     <style>
         body {
             background-color: #f8f9fa;
@@ -18,7 +18,7 @@ $email
         }
 
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: auto;
         }
 
@@ -77,20 +77,18 @@ $email
             Your browser does not support the audio element.
         </audio>
         <div class="container">
-            <h1 class="thank-you-heading">Thank You Senior For Voting!</h1>
-            <p class="thank-you-message">Your vote has been submitted successfully.</p>
+            <h1 class="thank-you-heading text-danger">Sorry, this election is unavailable</h1>
+            <p class="thank-you-message">Please Check back later.</p>
             <!-- <img class="dancing-toy" src="./admin/assets/uploads/happy-dance-3.gif" alt="Happys Dancing Toy" height="150px"> -->
             <img class="dancing-toy" src="./admin/assets/img/prempeh_crest.png" alt="Happys Dancing Toy" height="250px">
-            <a href="#" class="btn-continue">You can exit</a>
+            <a href="#" class="btn-continue btn-info">Try again in few days..</a>
         </div>
     </div>
 
     <a href="https://linktr.ee/charlesbihdev" target="_blank">
         <p style="display:none; margin: 0; text-align: center">Developed By: Snr Charles Bih (2021)</p>
     </a>
-    <?php
-    require_once "./notify_success_email.php";
-    ?>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>

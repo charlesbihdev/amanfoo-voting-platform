@@ -60,6 +60,7 @@ if (isset($_POST['submit'])) {
     <meta name="author" content="" />
     <title>Login - Amanfoo Voting Platform</title>
     <link href="./css/styles.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./inc/sweetalert.js"> </script>

@@ -74,6 +74,14 @@ class Admin
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function readWithNoRestriction()
+    {
+        $sql = "SELECT * FROM " . $this->table;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     //THE UPDATE FUNCTION
     public function update($id, $data)
     {

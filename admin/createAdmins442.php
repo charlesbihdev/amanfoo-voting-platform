@@ -25,7 +25,6 @@ $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
 
 
-
 $mail->setFrom("no_reply@amanfoovoting.com", "AmanfooVoting");
 
 
@@ -40,7 +39,8 @@ if (isset($_POST['submit'])) {
 
   if (!empty($email) && !empty($name) && !empty($subject)) {
 
-    // Insert the data into the Candidates table, including the file name
+    // Create a new instance of Admin class and fetch admin based on email
+
     $newAdmin = new Admin($pdo, 'admin');
     $admin = $newAdmin->read("email", $email);
     $numRows = count($admin); // Count the number of rows returned by the query
@@ -127,6 +127,7 @@ if (isset($_POST['submit'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Amanfoo - Create User</title>
   <link href="./css/styles.css" rel="stylesheet" />
+  <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./inc/sweetalert.js"> </script>

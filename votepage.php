@@ -14,7 +14,13 @@ if (isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-
+// Create a new instance of Admin class and fetch election based on election id
+$getElections = new Admin($pdo, 'elections');
+$electionFilterById = $getElections->read("election_id", $election_id);
+$electionStatusNum = $electionFilterById[0]['election_status'];
+if ($electionStatusNum != 1) {
+    header('location: ./election-unavailable.php');
+}
 // Fetch voters' data from the database
 $sqlVoters = "SELECT u.*, COUNT(v.vote_id) AS vote_count
               FROM users u
@@ -36,7 +42,7 @@ if ($voters[0]['vote_count'] > 0) {
     exit();
 }
 
-// Step 1: Fetch candidates based on their positions and the election_id
+// Fetch candidates based on their positions and the election_id
 $sql = "SELECT * FROM candidates WHERE election_id = :election_id ORDER BY position_id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':election_id', $election_id, PDO::PARAM_INT);
@@ -113,7 +119,7 @@ if (isset($_POST["submit"])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="./vote-style/style.css">
     <title>Amanfoo - Vote Page</title>

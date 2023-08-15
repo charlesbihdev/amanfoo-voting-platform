@@ -20,13 +20,21 @@ if (isset($_GET['electionid'])) {
   $electionId = $_GET['electionid'];
   $electionTypeResult = $electionType->read("election_id", $electionId);
 } else {
-  $electionTypeResult = $electionType->readAll("election_id");
+  $electionTypeResult = $electionType->readWithNoRestriction();
   $electionId = $electionTypeResult[0]['election_id'];
 }
 //GET DASHBOARD TITLE
 $dasboardTitle = $electionType->read("election_id", $electionId);
 $title = $dasboardTitle[0]['election_name'];
-
+//Check Election status
+$electionStatusNum = $dasboardTitle[0]['election_status'];
+if ($electionStatusNum == 1) {
+  $btnclass = "btn-danger";
+  $btnTxt = "stop election";
+} else {
+  $btnclass = "btn-primary";
+  $btnTxt = "start Election";
+}
 // Retrieve the number of positions for the specific election
 $sqlPositions = "SELECT COUNT(*) AS position_count FROM positions WHERE election_id = :election_id";
 $stmtPositions = $pdo->prepare($sqlPositions);
@@ -114,6 +122,8 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
   <meta name="description" content="" />
   <meta name="author" content="" />
   <title>Amanfoo Elections</title>
+  <!-- <link rel="icon" href="./assets/img/amanfoo_crest16x16.png"> -->
+  <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
   <link href="css/styles.css" rel="stylesheet" />
@@ -272,7 +282,12 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
                   <?php
                   if ($isSuperAdmin) {
                     echo '<button class="btn btn-success " data-bs-toggle="modal" data-bs-target="#exampleModal">New Election</button>';
-                    echo '<a href="./createAdmins442.php"> <button class="btn btn-success">Add Admin</button></a>';
+                    echo '<a href="./createAdmins442.php"> <button class="btn btn-info">Add Admin</button></a>';
+                    if (isset($_GET['electionid'])) {
+                      $electionId = $_GET['electionid'];
+                    }
+                    $changestatustxt = '<a href="./changeElectionStatus.php?electionid=' . $electionId . '"> <button class="btn ' . $btnclass . '">' . $btnTxt . '</button></a>';
+                    echo $changestatustxt;
                   }
                   ?>
                 </div>
