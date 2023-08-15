@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3308
--- Generation Time: Aug 03, 2023 at 02:02 PM
+-- Generation Time: Aug 15, 2023 at 03:39 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -40,8 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `email`, `admin_id`, `admin_name`, `isSuperAdmin`) VALUES
-(1, 'admin@admin.com', 'admin', 'Charles', b'1'),
-(2, 'admin1@admin.com', 'admin1', 'Owusu', b'0');
+(1, 'admin@admin.com', 'admin', 'Charles', b'1');
 
 -- --------------------------------------------------------
 
@@ -69,15 +68,20 @@ CREATE TABLE `candidates` (
 --
 
 INSERT INTO `candidates` (`candidate_id`, `position_id`, `election_id`, `candidate_name`, `created_at`, `updated_at`, `candidate_phone`, `photo`, `candidate_house`, `candidate_yeargroup`, `candidate_class`, `votes_count`) VALUES
-(1, 11, 8, 'Snr Kwame Boateng Adele Palmas', '2023-07-23 01:32:18', '2023-08-01 15:13:47', '+18177977178', 'image_64c20cc742f7d.jpg', 'Ramseyer', 1986, 'Texas, USA', 5),
-(2, 12, 8, 'Snr Keneth Ohene Mantey', '2023-07-23 01:34:04', '2023-08-01 15:13:47', '+233243354079', 'image_64bd4cea755c1.jpg', 'Ramseyer', 2006, 'Obuasi Municipal, Ashanti, Ghana', 5),
-(3, 12, 8, 'Eric Kwadwo Tsitsi', '2023-07-23 01:36:30', '2023-08-01 15:07:20', '+233202009046', 'image_64c20f35d763c.jpg', 'Ramseyer', 2005, 'Kumasi, Ashanti, Ghana', 3),
-(23, 13, 8, 'Snr Yaw G Ayim', '2023-07-23 01:38:07', '2023-08-01 15:13:47', '+1240-906-2033', 'image_64bd5a23db44a.jpg', 'Ramseyer', 1989, 'Bowie, MD', 3),
-(24, 13, 8, 'Snr Timothy Richard', '2023-07-23 01:40:55', '2023-08-01 15:08:30', '+233541454522', 'image_64c20efbc2e2f.jpg', 'Ramseyer', 2017, 'Kumasi, Ashanti, Ghana', 5),
-(25, 14, 8, 'Snr Ebenezer Andoh Korsah', '2023-07-23 01:42:43', '2023-08-01 15:13:47', '+233257900732', 'image_64c20f27c59f3.jpg', 'Ramseyer', 2012, 'Tema, Greater Accra, Ghana', 6),
-(26, 14, 8, 'Snr Clinton Owusu ', '2023-07-23 01:44:22', '2023-08-01 15:10:01', '+233542492196', 'image_64c20f148452b.jpg', 'Ramseyer', 2015, 'Kumasi, Ashanti, Ghana', 2),
-(27, 15, 8, 'Snr. William Acheampong Asenso', '2023-07-23 01:46:01', '2023-08-01 15:13:47', '+233243146592', 'image_64c20ca6d8e0f.jpg', 'Ramseyer', 1990, 'Kumasi, Ashanti, Ghana', 4),
-(28, 15, 8, 'Snr. Denis Ofori Ababio', '2023-07-23 01:52:16', '2023-08-01 15:11:24', '+233555436800', 'image_64bd5bf9c1aed.jpg', 'Ramseyer', 1998, 'Kumasi, Ashanti, Ghana', 4);
+(1, 11, 8, 'Snr Kwame Boateng Adele Palmas', '2023-07-23 01:32:18', '2023-08-13 19:35:41', '+18177977178', 'image_64c20cc742f7d.jpg', 'Ramseyer', 1986, 'Texas, USA', 11),
+(2, 12, 8, 'Snr Keneth Ohene Mantey', '2023-07-23 01:34:04', '2023-08-13 19:35:41', '+233243354079', 'image_64bd4cea755c1.jpg', 'Ramseyer', 2006, 'Obuasi, Ashanti, Ghana', 10),
+(3, 12, 8, 'Eric Kwadwo Tsitsi', '2023-07-23 01:36:30', '2023-08-10 14:39:56', '+233202009046', 'image_64c20f35d763c.jpg', 'Ramseyer', 2005, 'Kumasi, Ashanti, Ghana', 5),
+(23, 13, 8, 'Snr Yaw G. Ayim', '2023-07-23 01:38:07', '2023-08-10 16:17:43', '+1240-906-2033', 'image_64bd5a23db44a.jpg', 'Ramseyer', 1989, 'Bowie, Maryland, USA', 7),
+(24, 13, 8, 'Snr Timothy Richard', '2023-07-23 01:40:55', '2023-08-13 19:35:41', '+233541454522', 'image_64c20efbc2e2f.jpg', 'Ramseyer', 2017, 'Kumasi, Ashanti, Ghana', 8),
+(25, 14, 8, 'Snr Ebenezer Andoh Korsah', '2023-07-23 01:42:43', '2023-08-10 16:17:43', '+233257900732', 'image_64c20f27c59f3.jpg', 'Ramseyer', 2012, 'Tema, Greater Accra, Ghana', 10),
+(26, 14, 8, 'Snr Clinton Owusu ', '2023-07-23 01:44:22', '2023-08-13 19:35:41', '+233542492196', 'image_64c20f148452b.jpg', 'Ramseyer', 2015, 'Kumasi, Ashanti, Ghana', 5),
+(27, 15, 8, 'Snr. William Acheampong Asenso', '2023-07-23 01:46:01', '2023-08-13 19:35:41', '+233243146592', 'image_64c20ca6d8e0f.jpg', 'Ramseyer', 1990, 'Kumasi, Ashanti, Ghana', 7),
+(28, 15, 8, 'Snr. Denis Ofori-Ababio', '2023-07-23 01:52:16', '2023-08-13 22:10:22', '+233555436800', 'image_64d954ce96b0a.jpg', 'Ramseyer', 1998, 'Kumasi, Ashanti, Ghana', 8),
+(29, 18, 9, 'Snr. Dr. Akwasi Amponsah', '2023-08-06 14:23:34', '2023-08-06 19:05:29', '+175345367', 'image_64cface69c4ec.jpg', 'Freeman', 1977, 'U.S.A', 1),
+(30, 19, 9, 'Snr. Marklord Nana Osei Banahene', '2023-08-06 14:27:44', '2023-08-06 19:05:29', '0564345678', 'image_64cfade087bcf.jpg', 'Freeman', 2011, 'Ablekuma, Greater Accra, Ghana', 1),
+(31, 20, 9, 'Snr. Adubofour Agyemang', '2023-08-06 14:29:28', '2023-08-06 19:05:29', '0345678987', 'image_64cfae48ded78.jpg', 'Freeman', 2016, 'Ejisu, Ashanti, Ghana', 1),
+(32, 21, 9, 'Snr. Edmund Adubofour Afrifa', '2023-08-06 14:30:40', '2023-08-15 13:01:03', '0456789092', 'image_64db770fad9a8.jpg', 'Freeman', 2016, 'Fawoade, Ashanti, Ghana', 1),
+(33, 22, 9, 'Snr. Selasie Ahiable Hope', '2023-08-06 14:32:27', '2023-08-06 19:05:29', '04567876543', 'image_64cfaefb4e2f4.jpg', 'Freeman', 2007, 'Kumasi, Ashanti, Ghana', 1);
 
 -- --------------------------------------------------------
 
@@ -91,16 +95,17 @@ CREATE TABLE `elections` (
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `house` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `elections`
 --
 
-INSERT INTO `elections` (`election_id`, `election_name`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
-(8, 'RAMSEYER ELECTIONS', '2023-07-23', '2023-07-27', '2023-07-23 01:20:47', '2023-08-01 14:56:52'),
-(9, 'FREEMAN ELECTIONS', '2023-07-23', '2023-07-27', '2023-07-23 14:52:35', '2023-08-01 14:57:04');
+INSERT INTO `elections` (`election_id`, `election_name`, `start_date`, `end_date`, `created_at`, `updated_at`, `house`) VALUES
+(8, 'RAMSEYER ELECTIONS', '2023-07-23', '2023-07-27', '2023-07-23 01:20:47', '2023-08-10 13:47:10', 'Ramseyer'),
+(9, 'FREEMAN ELECTIONS', '2023-07-23', '2023-07-27', '2023-07-23 14:52:35', '2023-08-10 13:47:20', 'Freeman');
 
 -- --------------------------------------------------------
 
@@ -122,11 +127,15 @@ CREATE TABLE `positions` (
 
 INSERT INTO `positions` (`position_id`, `election_id`, `position_name`, `created_at`, `updated_at`) VALUES
 (11, 8, 'President', '2023-07-23 01:21:47', '2023-07-23 01:21:47'),
-(12, 8, 'Vice President', '2023-07-23 01:22:35', '2023-07-23 01:22:35'),
+(12, 8, 'Vice-President', '2023-07-23 01:22:35', '2023-08-10 14:37:29'),
 (13, 8, 'Secretary', '2023-07-23 01:22:56', '2023-07-23 01:22:56'),
 (14, 8, 'Organizer', '2023-07-23 01:23:13', '2023-07-23 01:23:13'),
 (15, 8, 'Financial Controller', '2023-07-23 01:23:56', '2023-07-23 01:23:56'),
-(18, 9, 'President', '2023-07-23 14:54:12', '2023-07-23 14:54:12');
+(18, 9, 'President', '2023-07-23 14:54:12', '2023-07-23 14:54:12'),
+(19, 9, 'Vice-President', '2023-08-06 14:15:18', '2023-08-06 14:15:18'),
+(20, 9, 'Secretary', '2023-08-06 14:15:55', '2023-08-06 14:15:55'),
+(21, 9, 'Finanacial Controller', '2023-08-06 14:16:13', '2023-08-06 14:16:13'),
+(22, 9, 'Organiser', '2023-08-06 14:16:54', '2023-08-06 14:16:54');
 
 -- --------------------------------------------------------
 
@@ -144,22 +153,9 @@ CREATE TABLE `users` (
   `photo` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `location` varchar(255) DEFAULT NULL
+  `location` varchar(255) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_id`, `name`, `email`, `house`, `voter_id`, `election_id`, `photo`, `created_at`, `updated_at`, `location`) VALUES
-(20, 'Andrews Asare', 'asareandrews44@gmail.com', 'Ramseyer', 'H50mKS8', 8, 'image_64bc927daf834.jpg', '2023-07-23 02:37:49', '2023-07-23 02:38:31', 'Sefwi Bekwai'),
-(21, 'Charles Owusu', 'charlesowusubih@gmail.com', 'Ramseyer', 'zCOEqQ8', 8, 'image_64bd36de8cef0.jpg', '2023-07-23 14:19:10', '2023-07-24 19:28:03', 'Tema, Ghana'),
-(22, 'Charles Owusu', 'bihcharles2004@gmail.com', 'Ramseyer', 'f74nsx8', 8, 'image_64bd38e12baf2.jpg', '2023-07-23 14:27:45', '2023-07-23 14:31:13', 'Tarkwa, Ghana'),
-(23, 'Charles Owusu', 'charlesbih@gmail.com', 'Ramseyer', '9ZkQ0v8', 8, 'image_64bd7a3404416.jpg', '2023-07-23 19:06:28', '2023-07-23 19:06:28', 'Sefwi Bekwai, Ghana'),
-(24, 'Charles Owusu Bih', 'owusubih@gmail.com', 'Ramseyer', 'ylmJt48', 8, 'image_64bd7e8a77508.jpg', '2023-07-23 19:24:58', '2023-07-23 19:30:30', 'Sefwi Bekwai, Ghana'),
-(25, 'Nana Osei', 'nanaosei@gmail.com', 'Ramseyer House', 'UC4Nlp8', 8, 'image_64bda173233e0.jpg', '2023-07-23 21:53:55', '2023-07-23 22:05:05', 'Sefwi Bekwai, Ghana'),
-(26, 'Karl Bih', 'karlbih@gmail.com', 'Ramseyer', 'VNygeh8', 8, 'image_64c2168230b6b.jpg', '2023-07-27 07:02:26', '2023-07-27 07:02:26', 'Kumasi, Ghana'),
-(27, 'Sarpong Antwi-Tanoh', 'bigbigstone2016@gmail.com', 'Ramseyer', 'cY4jf88', 8, 'image_64c91d8a5fa06.jpeg', '2023-08-01 14:58:18', '2023-08-01 14:58:18', 'Netherlands');
 
 -- --------------------------------------------------------
 
@@ -174,44 +170,6 @@ CREATE TABLE `votes` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `votes`
---
-
-INSERT INTO `votes` (`vote_id`, `user_id`, `candidate_id`, `created_at`, `updated_at`) VALUES
-(64, 20, 2, '2023-07-23 02:38:31', '2023-07-23 02:38:31'),
-(65, 20, 24, '2023-07-23 02:38:31', '2023-07-23 02:38:31'),
-(66, 20, 25, '2023-07-23 02:38:31', '2023-07-23 02:38:31'),
-(67, 20, 28, '2023-07-23 02:38:31', '2023-07-23 02:38:31'),
-(68, 22, 1, '2023-07-23 14:31:13', '2023-07-23 14:31:13'),
-(69, 22, 2, '2023-07-23 14:31:13', '2023-07-23 14:31:13'),
-(70, 22, 23, '2023-07-23 14:31:13', '2023-07-23 14:31:13'),
-(71, 22, 25, '2023-07-23 14:31:13', '2023-07-23 14:31:13'),
-(72, 22, 27, '2023-07-23 14:31:13', '2023-07-23 14:31:13'),
-(73, 24, 3, '2023-07-23 19:30:30', '2023-07-23 19:30:30'),
-(74, 24, 23, '2023-07-23 19:30:30', '2023-07-23 19:30:30'),
-(75, 24, 25, '2023-07-23 19:30:30', '2023-07-23 19:30:30'),
-(76, 24, 28, '2023-07-23 19:30:30', '2023-07-23 19:30:30'),
-(77, 25, 1, '2023-07-23 22:05:04', '2023-07-23 22:05:04'),
-(78, 25, 3, '2023-07-23 22:05:04', '2023-07-23 22:05:04'),
-(79, 25, 24, '2023-07-23 22:05:04', '2023-07-23 22:05:04'),
-(80, 25, 26, '2023-07-23 22:05:04', '2023-07-23 22:05:04'),
-(81, 25, 28, '2023-07-23 22:05:04', '2023-07-23 22:05:04'),
-(82, 21, 2, '2023-07-24 19:28:03', '2023-07-24 19:28:03'),
-(83, 21, 24, '2023-07-24 19:28:03', '2023-07-24 19:28:03'),
-(84, 21, 25, '2023-07-24 19:28:03', '2023-07-24 19:28:03'),
-(85, 21, 27, '2023-07-24 19:28:03', '2023-07-24 19:28:03'),
-(86, 26, 1, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
-(87, 26, 2, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
-(88, 26, 24, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
-(89, 26, 25, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
-(90, 26, 28, '2023-07-27 07:03:06', '2023-07-27 07:03:06'),
-(91, 27, 1, '2023-08-01 15:13:47', '2023-08-01 15:13:47'),
-(92, 27, 2, '2023-08-01 15:13:47', '2023-08-01 15:13:47'),
-(93, 27, 23, '2023-08-01 15:13:47', '2023-08-01 15:13:47'),
-(94, 27, 25, '2023-08-01 15:13:47', '2023-08-01 15:13:47'),
-(95, 27, 27, '2023-08-01 15:13:47', '2023-08-01 15:13:47');
 
 --
 -- Indexes for dumped tables
@@ -267,13 +225,13 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `candidate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `candidate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `elections`
@@ -285,19 +243,19 @@ ALTER TABLE `elections`
 -- AUTO_INCREMENT for table `positions`
 --
 ALTER TABLE `positions`
-  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- Constraints for dumped tables
