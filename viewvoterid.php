@@ -21,7 +21,7 @@ if (isset($_GET['voterid'])) {
     <meta name="author" content="" />
     <title>Voting - Registration</title>
     <link href="./admin/css/styles.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./admin/assets/img/favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="./admin/inc/style.css" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
