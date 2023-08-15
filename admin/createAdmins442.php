@@ -1,12 +1,12 @@
 <?php
 session_start();
-//hidden line is here;
 
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
 
 require "./vendor/autoload.php";
 $alert = "";
+$electionId = $_GET['electionid'];
 
 use FontLib\Table\Type\head;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -23,6 +23,7 @@ $mail->SMTPAuth = true;
 $mail->Host = "smtp.gmail.com";
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
+
 
 
 $mail->setFrom("no_reply@amanfoovoting.com", "AmanfooVoting");
@@ -172,7 +173,7 @@ if (isset($_POST['submit'])) {
 
                 <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                   <input type="submit" class="btn btn-warning" name="submit" value="Create User"></input>
-                  <a href="./index.php">
+                  <a href="./index.php?electionid=<?php echo $electionId ?>">
                     <div class="btn btn-danger">Dashboard</div>
                   </a>
 

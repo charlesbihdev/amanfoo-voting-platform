@@ -282,11 +282,12 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
                   <?php
                   if ($isSuperAdmin) {
                     echo '<button class="btn btn-success " data-bs-toggle="modal" data-bs-target="#exampleModal">New Election</button>';
-                    echo '<a href="./createAdmins442.php"> <button class="btn btn-info">Add Admin</button></a>';
                     if (isset($_GET['electionid'])) {
                       $electionId = $_GET['electionid'];
                     }
                     $changestatustxt = '<a href="./changeElectionStatus.php?electionid=' . $electionId . '"> <button class="btn ' . $btnclass . '">' . $btnTxt . '</button></a>';
+                    $createAdmintxt = '<a href="./createAdmins442.php?electionid=' . $electionId . '"> <button class="btn btn-info">Add Admin</button></a>';
+                    echo $createAdmintxt;
                     echo $changestatustxt;
                   }
                   ?>
