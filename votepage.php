@@ -132,7 +132,7 @@ if (isset($_POST["submit"])) {
         <p>Amanfoo Voting Platform</p>
     </nav>
     <audio autoplay>
-        <source src="./admin/assets/audio/prempeh_anthem.mp3" type="audio/mp3" />
+        <source src="./admin/assets/audio/prempeh_anthem.mp3" type="audio/mp3" controls />
         Your browser does not support the audio element.
     </audio>
     <!-- Your form and other HTML elements -->

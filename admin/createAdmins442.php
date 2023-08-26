@@ -1,6 +1,12 @@
 <?php
 session_start();
-
+//hidden line is here;
+$secretcode = 292004;
+if (!isset($_SESSION['admin_id']) || !isset($_SESSION['isSuperAdmin']) || !isset($_SESSION['admin_name']) || !isset($_GET['pass']) || !isset($_GET['electionid']) || ($_GET['pass'] != $secretcode)) {
+  // User is logged in
+  echo "you visited an unauthorized page";
+  exit;
+}
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
 
@@ -24,7 +30,9 @@ $mail->Host = "smtp.gmail.com";
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
 
-
+//email and address here
+$mail->Username = "bihcharles2004@gmail.com";
+$mail->Password = "nbdevquibdacgftl";
 
 $mail->setFrom("no_reply@amanfoovoting.com", "AmanfooVoting");
 

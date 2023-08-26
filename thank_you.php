@@ -73,7 +73,7 @@ $email
 <body>
     <div style="height: 90vh">
         <audio autoplay>
-            <source src="./admin/assets/audio/prempeh_anthem.mp3" type="audio/mp3" />
+            <source src="./admin/assets/audio/prempeh_anthem.mp3" type="audio/mp3" controls />
             Your browser does not support the audio element.
         </audio>
         <div class="container">

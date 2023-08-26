@@ -59,7 +59,7 @@ $totalVoters = $stmtTotalVoters->fetch(PDO::FETCH_ASSOC)['total_voters'];
 
 // Retrieve the number of voters who have voted for the specific election
 $sqlVotedVoters = "SELECT COUNT(DISTINCT user_id) AS voted_voters FROM votes WHERE candidate_id IN (
-  SELECT candidate_id FROM Candidates WHERE election_id = :election_id
+  SELECT candidate_id FROM candidates WHERE election_id = :election_id
 )";
 $stmtVotedVoters = $pdo->prepare($sqlVotedVoters);
 $stmtVotedVoters->bindParam(':election_id', $electionId, PDO::PARAM_INT);
