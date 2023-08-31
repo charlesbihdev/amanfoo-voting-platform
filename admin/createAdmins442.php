@@ -1,12 +1,7 @@
 <?php
 session_start();
 //hidden line is here;
-$secretcode = 292004;
-if (!isset($_SESSION['admin_id']) || !isset($_SESSION['isSuperAdmin']) || !isset($_SESSION['admin_name']) || !isset($_GET['pass']) || !isset($_GET['electionid']) || ($_GET['pass'] != $secretcode)) {
-  // User is logged in
-  echo "you visited an unauthorized page";
-  exit;
-}
+
 require_once "./database/config.php";
 require_once "./auxilliaries.php";
 

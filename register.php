@@ -7,8 +7,8 @@ $alert = "";
 $electionsFetch = new Admin($pdo, 'elections');
 $elections = $electionsFetch->readAll("election_id");
 
-$housesFetch = new Admin($pdo, 'elections');
-$houses = $housesFetch->readAll("election_id");
+// $housesFetch = new Admin($pdo, 'elections');
+// $houses = $housesFetch->readAll("election_id");
 
 
 
@@ -90,6 +90,10 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body class="bg-success">
+    <audio autoplay>
+        <source src="./admin/assets/audio/prempeh_anthem.mp3" type="audio/mp3" controls />
+        Your browser does not support the audio element.
+    </audio>
     <?php
     echo "<script>";
     echo $alert;
@@ -103,7 +107,7 @@ if (isset($_POST['submit'])) {
                         <div class="col-lg-7">
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4 text-success">Register To Vote</h3>
+                                    <h3 class="text-center font-weight-light my-4 text-success">VOTER REGISTRATION</h3>
                                 </div>
                                 <div class="card-body">
                                     <form method="POST" action="" enctype="multipart/form-data">
@@ -136,10 +140,19 @@ if (isset($_POST['submit'])) {
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
                                                     <select class="form-select" id="house" name="house" required>
-                                                        <option value="" selected>Select House</option>
-                                                        <?php foreach ($houses as $house) : ?>
-                                                            <option value="<?php echo $house['house']; ?>"><?php echo $house['house']; ?></option>
-                                                        <?php endforeach; ?>
+                                                        <option value="" selected> Select Your House </option>
+
+                                                        <option value="RAMSEYER">RAMSEYER</option>
+                                                        <option value="BUTLER">BUTLER</option>
+                                                        <option value="FREEMAN">FREEMAN</option>
+                                                        <option value="PEARSON">PEARSON</option>
+                                                        <option value="AGGREY">AGGREY</option>
+                                                        <option value="GUGGISBERG">GUGGISBERG</option>
+                                                        <option value="OSEI TUTU">OSEI TUTU</option>
+                                                        <option value="OPOKU WARE">OPOKU WARE</option>
+                                                        <option value="ARTHUR CLARKE">ARTHUR CLARKE</option>
+                                                        <option value="MATTHEW OPOKU PREMPEH">MATTHEW OPOKU PREMPEH</option>
+
                                                     </select>
                                                     <label for="house">House</label>
                                                 </div>
@@ -157,13 +170,32 @@ if (isset($_POST['submit'])) {
                                             </div>
                                         </div>
 
-                                        <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" id="location" type="text" placeholder="Enter your Location" name="location" required />
-                                            <label for="location"> Location(City or Town/State or Region/Country)</label>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="city" name="city" type="text" placeholder="Type City or Town" required />
+                                                    <label for="city">Location (City or Town)</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="state" name="state" type="text" placeholder="Type State or Region" required />
+                                                    <label for="year">Location (State or Region)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="country" type="text" placeholder="Type your Country" name="country" required />
+                                                    <label for="country"> Location (Country)</label>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="mt-4 mb-0">
-                                            <div class="d-grid"><input type="submit" class="btn btn-warning btn-block" value="Create Account" name="submit"></input></div>
+                                            <div class="d-grid"><input type="submit" class="btn btn-warning btn-block" value="Submit & Create Account" name="submit"></input></div>
                                         </div>
                                     </form>
                                 </div>
