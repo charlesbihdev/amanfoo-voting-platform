@@ -167,29 +167,11 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><?php echo $currentElectionName ?></li>
                     </ol>
-                    <form method="POST" action="generate_pdf.php?electionid=<?php echo $_GET['electionid'] ?>">
-                        <label for="range">Select Range:</label>
-                        <select name="range" id="range">
-                            <!-- Generate options based on the number of voters -->
-                            <?php
-                            $totalVoters = count($voters);
-                            $perPage = 50;
-                            for ($i = 0; $i < $totalVoters; $i += $perPage) {
-                                $start = $i + 1;
-                                $end = min($i + $perPage, $totalVoters);
-                                echo "<option value='$start-$end'>[$start-$end]</option>";
-                            }
-                            ?>
-                        </select>
-                        <input type="submit" value="Export PDF">
-                    </form>
-
                     <?php
-                    // if ($isSuperAdmin) {
-                    //     $generatelink = '<a href="generate_pdf.php?electionid=' . $_GET['electionid'] . ' " class="btn btn-primary mb-4" target="_blank">Export PDF</a>';
-                    //     echo $generatelink;
-                    // } 
-                    ?>
+                    if ($isSuperAdmin) {
+                        $generatelink = '<a href="generate_pdf.php?electionid=' . $_GET['electionid'] . ' " class="btn btn-primary mb-4" target="_blank">Export PDF</a>';
+                        echo $generatelink;
+                    } ?>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
