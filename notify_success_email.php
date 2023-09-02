@@ -118,7 +118,6 @@ $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
 
 
-
 $mail->setFrom("no_reply@amanfoovoting.com", "AmanfooVoting");
 
 $mail->addAddress($email, $name);
