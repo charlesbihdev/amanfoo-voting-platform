@@ -111,6 +111,16 @@ $stmtCandidatesVotes->bindParam(':election_id', $electionId, PDO::PARAM_INT);
 $stmtCandidatesVotes->bindParam(':position_id', $selectedPositionId, PDO::PARAM_INT);
 $stmtCandidatesVotes->execute();
 $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
+
+//percentage in bar graphs
+$extractedArray = array_column($candidatesData, 'votes_count');
+$finalArray = [];
+foreach ($extractedArray as $key) {
+  $finalArray[] = round($key / $votedVoters * 100, 2);
+}
+$finalPercentArray = json_encode($finalArray);
+
+// echo json_encode(array_column($candidatesData, 'votes_count'));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -494,12 +504,17 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
     var myBarChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: <?php echo json_encode(array_column($candidatesData, 'candidate_name')); ?>,
+        labels: <?php
+                echo json_encode(array_column($candidatesData, 'candidate_name'));
+                ?>,
         datasets: [{
-          label: '# of Votes',
+          label: '% of Votes',
           backgroundColor: "rgba(40, 167, 69, 1)",
           borderColor: "rgba(2,117,216,1)",
-          data: <?php echo json_encode(array_column($candidatesData, 'votes_count')); ?>,
+          data: <?php
+                echo $finalPercentArray;
+                // echo json_encode(array_column($candidatesData, 'votes_count'));
+                ?>,
         }],
       },
       options: {
@@ -519,7 +534,10 @@ $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
           yAxes: [{
             ticks: {
               min: 0,
-              max: <?php echo $totalVoters ?>,
+              max: <?php
+                    // echo $totalVoters 
+                    echo 100;
+                    ?>,
               maxTicksLimit: 5
             },
             gridLines: {

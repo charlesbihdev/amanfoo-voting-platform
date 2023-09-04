@@ -167,7 +167,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><?php echo $currentElectionName ?></li>
                     </ol>
-                    <form method="POST" action="generate_pdf.php?electionid=<?php echo $_GET['electionid'] ?>">
+                    <form method="POST" action="generate_pdf.php?electionid=<?php echo $_GET['electionid'] ?>" target="_blank" class="mb-3">
                         <label for="range">Select Range:</label>
                         <select name="range" id="range">
                             <!-- Generate options based on the number of voters -->
@@ -248,7 +248,7 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo $voter['email']; ?></td>
                                             <td>
                                                 <?php
-                                                if ($isSuperAdmin) {
+                                                if ($isSuperAdmin == 1) {
                                                     echo $voter['voter_id'];
                                                 } ?>
 
@@ -256,13 +256,13 @@ $voters = $stmtVoters->fetchAll(PDO::FETCH_ASSOC);
                                             </td>
                                             <td>
                                                 <?php
-                                                if ($isSuperAdmin) {
+                                                if ($isSuperAdmin == 1 || $isSuperAdmin == 2) {
                                                     echo $voter['vote_count'] > 0 ? 'Yes' : 'No';
                                                 } ?>
                                             </td>
                                             <td>
                                                 <?php
-                                                if ($isSuperAdmin) {
+                                                if ($isSuperAdmin == 1) {
                                                     $deletelink = '<a href="#" data-href="voters-delete.php?id=' . $voter['user_id'] . '&electionid=' . $_GET['electionid'] . '" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete">Delete</a>';
                                                     echo $deletelink;
                                                 } ?>
