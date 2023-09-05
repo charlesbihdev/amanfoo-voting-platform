@@ -112,6 +112,7 @@ $stmtCandidatesVotes->bindParam(':position_id', $selectedPositionId, PDO::PARAM_
 $stmtCandidatesVotes->execute();
 $candidatesData = $stmtCandidatesVotes->fetchAll(PDO::FETCH_ASSOC);
 
+
 //percentage in bar graphs
 $extractedArray = array_column($candidatesData, 'votes_count');
 $finalArray = [];
@@ -504,9 +505,7 @@ $finalPercentArray = json_encode($finalArray);
     var myBarChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: <?php
-                echo json_encode(array_column($candidatesData, 'candidate_name'));
-                ?>,
+        labels: <?php echo json_encode(array_column($candidatesData, 'candidate_name')); ?>,
         datasets: [{
           label: '% of Votes',
           backgroundColor: "rgba(40, 167, 69, 1)",
@@ -535,10 +534,10 @@ $finalPercentArray = json_encode($finalArray);
             ticks: {
               min: 0,
               max: <?php
-                    // echo $totalVoters 
+                    // echo $totalVoters
                     echo 100;
                     ?>,
-              maxTicksLimit: 5
+              maxTicksLimit: 10
             },
             gridLines: {
               display: true
@@ -563,7 +562,10 @@ $finalPercentArray = json_encode($finalArray);
       data: {
         labels: <?php echo json_encode(array_column($candidatesData, 'candidate_name')); ?>,
         datasets: [{
-          data: <?php echo json_encode(array_column($candidatesData, 'votes_count')); ?>,
+          data: <?php
+                // echo json_encode(array_column($candidatesData, 'votes_count'));
+                echo $finalPercentArray;
+                ?>,
           backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
         }],
       },
